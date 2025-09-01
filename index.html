@@ -3,20 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Callsheet Studio — Standalone (v15)</title>
+  <title>Callsheet Studio — Standalone (v18 + Templates)</title>
   <style>
-    /* —— Calm, legible theme —— */
     :root{
-      --bg:#0e1217;           /* deep graphite */
-      --panel:#121822;        /* soft navy-slate */
-      --soft:#151d28;         /* card tint */
-      --ink:#e9eef4;          /* text */
-      --muted:#a8b3c2;        /* secondary */
-      --line:#233042;         /* borders */
-      --accent:#6cc4ff;       /* sky */
-      --accent-2:#5fe3b3;     /* mint */
-      --warn:#f6b26b;         /* warm amber */
-      --danger:#f47c7c;       /* soft red */
+      --bg:#0e1217; --panel:#121822; --soft:#151d28; --ink:#e9eef4; --muted:#a8b3c2; --line:#233042; --accent:#6cc4ff; --accent-2:#5fe3b3; --warn:#f6b26b; --danger:#f47c7c;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -29,11 +19,11 @@
 
     .wrap{max-width:1320px;margin:0 auto;padding:18px}
     header.app{position:sticky;top:0;z-index:50;background:rgba(18,24,34,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-    .header-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:14px;padding:12px 18px}
+    .header-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.2fr;gap:14px;padding:12px 18px}
     .kard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
     .kard h3{margin:.1rem 0 .6rem;font-size:14px;letter-spacing:.3px;color:var(--muted);font-weight:700}
     .kard input,.kard textarea,.kard select{width:100%}
-    textarea.small{min-height:96px} /* bigger project notes */
+    textarea.small{min-height:96px}
     .row{display:flex;gap:10px;align-items:center}
     .row > *{flex:1}
 
@@ -52,7 +42,7 @@
     td.order{width:114px;white-space:nowrap}
     .order button{padding:6px 10px}
 
-    .btn{border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--soft)}
+    .btn{border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--soft);cursor:pointer}
     .btn.primary{border-color:#1b4b76;background:#112236}
     .btn.success{border-color:#1f7a57;background:#0f2a22}
     .btn.warn{border-color:#915a16;background:#2b2115}
@@ -61,7 +51,6 @@
     .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0 12px}
     .pill{font-size:12px;color:var(--muted)}
 
-    /* Big status bar */
     .status-banner{display:flex;align-items:center;justify-content:center;height:112px;border-radius:16px;border:1px solid var(--line);font-weight:900;font-size:34px;letter-spacing:.5px;margin-bottom:8px;text-transform:uppercase}
     .status-planning{background:linear-gradient(90deg,#1b2030,#182433);color:#c7d2fe}
     .status-live{background:linear-gradient(90deg,#0f2d40,#0c2c3c);color:#bfe0ff}
@@ -71,7 +60,6 @@
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .totals{display:flex;justify-content:flex-end;gap:20px;color:var(--muted)}
 
-    /* Floating Timer — draggable + minimizable */
     .floating{position:fixed;right:16px;bottom:16px;z-index:1000;border:1px solid var(--line);background:#0f1520cc;border-radius:16px;backdrop-filter:blur(10px);width:360px}
     .floating .head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--line);cursor:grab}
     .floating .head:active{cursor:grabbing}
@@ -79,10 +67,9 @@
     .floating.min .body{display:none}
     .floating.min{width:auto}
     .floating .title{font-weight:700}
-    .ft-remaining{font-size:30px;letter-spacing:1px;margin:4px 0}
+    .ft-remaining{font-size:30px;letter-spacing:1px;margin:4px 0;font-variant-numeric:tabular-nums}
     .chip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:12px;color:var(--muted)}
 
-    /* Location / Wardrobe thumbs — 120px */
     .thumbwrap{display:flex;align-items:center;gap:8px}
     .thumbbtn{position:relative;display:inline-block;width:120px;height:120px;border-radius:12px;border:1px dashed #334155;background:#111827;overflow:hidden;vertical-align:middle}
     .thumbbtn img{width:100%;height:100%;object-fit:cover;display:block}
@@ -90,7 +77,6 @@
     .thumbbtn .clear{position:absolute;top:-6px;right:-6px;background:#000a;color:#fff;border:1px solid #334155;border-radius:999px;width:18px;height:18px;line-height:16px;font-size:12px;text-align:center;display:none}
     .thumbbtn:hover .clear{display:block}
 
-    /* Phases inside a cell */
     .phases{display:flex;flex-direction:column;gap:8px}
     .phase-row{display:grid;grid-template-columns: 1.2fr .8fr .8fr auto; gap:8px; align-items:center}
     .phase-row select,.phase-row input{width:100%}
@@ -98,11 +84,26 @@
     .phase-meta{display:flex;gap:10px;align-items:center}
     .phase-tag{font-size:11px;color:var(--muted)}
 
-    /* Bigger, multi-line notes in tables */
+    .ft-phases{margin-top:8px}
+    .phase-mini-list{display:flex;flex-direction:column;gap:6px}
+    .phase-mini{display:flex;align-items:center;gap:8px}
+    .phase-mini .label{min-width:110px;font-size:12px;color:var(--muted)}
+    .phase-mini .bar{flex:1;height:6px;background:#1a2533;border-radius:999px;overflow:hidden}
+    .phase-mini .bar > span{display:block;height:100%}
+    .phase-mini .time{width:68px;text-align:right;font-size:12px;font-variant-numeric:tabular-nums}
+    .phase-mini.pending .bar > span{background:#2b3749}
+    .phase-mini.current .bar > span{background:var(--accent)}
+    .phase-mini.done .bar > span{background:var(--accent-2)}
+    .mini-btn{border:1px solid var(--line);background:#122033;border-radius:8px;padding:2px 6px;font-size:11px;cursor:pointer}
+
     textarea.noteBox{width:100%; min-height:100px; resize:vertical}
+
+/* Ensure Notes column stays usable */
+th.notes, td.notes{min-width:240px;}
+@media (max-width: 1200px){ th.notes, td.notes{min-width:200px;} }
+@media (max-width: 980px){ th.notes, td.notes{min-width:160px;} }
     input.dur-input{width:6ch; min-width:56px; text-align:right}
 
-    /* Print */
     @media print{ header.app,.tabs,.no-print,.floating{display:none!important} body{background:#fff;color:#000} .kard{border:1px solid #ccc} th{background:#eee;color:#000} a{color:#000} }
   </style>
 </head>
@@ -130,6 +131,7 @@
           <textarea id="projectNotes" class="small" placeholder="Notes (gear & props combined, reminders, risks, etc.)" style="margin-top:8px" readonly></textarea>
           <div class="row" style="margin-top:6px"><button class="btn" id="editNotesBtn">Edit Notes</button><span class="pill">Notes are locked to avoid accidental edits</span></div>
         </div>
+
         <div class="kard">
           <h3>Quick Actions</h3>
           <div class="toolbar">
@@ -141,14 +143,30 @@
           </div>
           <div class="pill">Autosaves to your browser (offline-ready). Import/Export to move between devices.</div>
         </div>
+
         <div class="kard">
           <h3>Status</h3>
           <div id="statusBig" class="status-banner status-planning">Planning</div>
-          <div class="pill">Auto: On Set while a row runs · Delayed if actual > plan · Wrap at finish.</div>
+          <div class="pill">Auto: On Set while a row runs • Delayed if actual > plan • Wrap at finish.</div>
+        </div>
+
+        <div class="kard">
+          <h3>Templates</h3>
+          <div class="toolbar">
+            <select id="tplSelect" style="min-width:160px"></select>
+            <button class="btn" id="tplLoad">Load</button>
+            <button class="btn success" id="tplSaveAs">Save as Template</button>
+            <button class="btn" id="tplExport">Export</button>
+            <label class="btn"><input type="file" id="tplImport" accept="application/json" style="display:none">Import</label>
+            <button class="btn" id="tplShare">Copy Share Link</button>
+            <button class="btn warn" id="tplDelete">Delete</button>
+          </div>
+          <div class="row"><label class="pill"><input type="checkbox" id="tplDefaultChk"> Use selected as default</label></div>
+          <div class="pill">Templates are saved locally. Export a .template.json file or copy a share link to send to others.</div>
         </div>
       </div>
       <nav class="tabs">
-        <button class="tab active" data-tab="schedule">Schedule · Shots & Time</button>
+        <button class="tab active" data-tab="schedule">Schedule • Shots & Time</button>
         <button class="tab" data-tab="team">Manpower & Contacts</button>
         <button class="tab" data-tab="costs">Costs & Receipts</button>
       </nav>
@@ -156,7 +174,6 @@
   </header>
 
   <main class="wrap">
-    <!-- SCHEDULE TAB -->
     <section class="content active" id="tab-schedule">
       <div class="kard">
         <div class="toolbar">
@@ -173,7 +190,7 @@
                 <th style="width:120px">Start</th>
                 <th style="width:120px">End</th>
                 <th style="width:140px">Duration (min)</th>
-                <th>Notes</th>
+                <th class="notes">Notes</th>
                 <th class="no-print" style="width:160px"></th>
               </tr>
             </thead>
@@ -201,7 +218,7 @@
                 <th style="width:120px">End</th>
                 <th style="width:140px">Duration (min)</th>
                 <th style="min-width:340px">Phases</th>
-                <th>Notes</th>
+                <th class="notes">Notes</th>
                 <th class="no-print" style="width:170px"></th>
               </tr>
             </thead>
@@ -211,13 +228,12 @@
       </div>
     </section>
 
-    <!-- TEAM TAB: Manpower & Contacts together -->
     <section class="content" id="tab-team">
       <div class="kard">
         <div class="toolbar"><span class="pill">Manpower — roles, PICs, contacts, and affiliation.</span><button class="btn" onclick="addPerson()">+ Add Role / Person</button></div>
         <div style="overflow:auto;max-height:360px">
           <table>
-            <thead><tr><th>Role</th><th>Name</th><th>Phone</th><th>Email</th><th>Affiliation</th><th>Call Time</th><th>Notes</th><th class="no-print" style="width:90px"></th></tr></thead>
+            <thead><tr><th>Role</th><th>Name</th><th>Phone</th><th>Email</th><th>Affiliation</th><th>Call Time</th><th class="notes">Notes</th><th class="no-print" style="width:90px"></th></tr></thead>
             <tbody id="tbody-people"></tbody>
           </table>
         </div>
@@ -227,14 +243,13 @@
         <div class="toolbar"><span class="pill">Contacts — locations, permits, logistics, security, etc.</span><button class="btn" onclick="addContact()">+ Add Contact</button></div>
         <div style="overflow:auto;max-height:360px">
           <table>
-            <thead><tr><th>Company</th><th>Contact Person</th><th>Phone</th><th>Email</th><th>Role / Purpose</th><th>Notes</th><th class="no-print" style="width:90px"></th></tr></thead>
+            <thead><tr><th>Company</th><th>Contact Person</th><th>Phone</th><th>Email</th><th>Role / Purpose</th><th class="notes">Notes</th><th class="no-print" style="width:90px"></th></tr></thead>
             <tbody id="tbody-contacts"></tbody>
           </table>
         </div>
       </div>
     </section>
 
-    <!-- COSTS TAB -->
     <section class="content" id="tab-costs">
       <div class="kard">
         <div class="toolbar"><span class="pill">Track vendors/suppliers, costs, and attach receipts.</span><button class="btn" onclick="addCost()">+ Add Cost</button></div>
@@ -249,7 +264,6 @@
     </section>
   </main>
 
-  <!-- Floating Countdown / Delay Logger (draggable + minimizable) -->
   <div class="floating no-print" id="floating" style="left:auto;right:16px;bottom:16px;top:auto">
     <div class="head" id="ft-head">
       <div class="title">Layout Timer</div>
@@ -261,28 +275,33 @@
     <div class="body">
       <div class="row" style="margin:6px 0"><select id="ft-rowSel" style="width:100%"></select></div>
       <div class="title" id="ft-title">No active row</div>
-      <div class="ft-remaining" id="ft-remaining">--:--</div>
+      <div class="ft-remaining" id="ft-remaining">--:--.--</div>
       <div class="chip" id="ft-status">—</div>
-      <div class="row" style="margin-top:8px"><button class="btn success" id="ft-toggle">Start</button><button class="btn primary" id="ft-next">Next Layout ➜</button></div>
+      <div id="ft-phases" class="ft-phases"></div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn success" id="ft-toggle">Start</button>
+        <button class="btn primary" id="ft-next">Next Phase →</button>
+        <button class="btn" id="ft-nextLayout" title="Skip to next layout">Next Layout »</button>
+      </div>
       <div class="row" style="margin-top:6px"><input id="ft-delayMin" type="number" min="1" value="5" style="max-width:80px" title="Delay minutes"/><input id="ft-delayNote" placeholder="Delay reason / notes"/><button class="btn warn" id="ft-addDelay">Add Delay</button></div>
       <div class="pill" id="ft-delays" style="margin-top:6px">No delays logged.</div>
     </div>
   </div>
 
   <script>
-    // —— Data Model ——
+    // ===== Data Model =====
     const emptyData = () => ({
       project:{title:'', client:'', date:'', location:'', dayStart:'', shootStart:'', lockShoot:false, notes:'', wrapped:false},
       pre:[],
-      shoot:[], // rows include: {label,type,start,end,dur,notes,locationImg,wardrobeImg, phases:[{label,start,mins}], autoPhases:boolean}
+      shoot:[], // see prior structure
       people:[], contacts:[], costs:[]
     });
     let data = emptyData();
     let active = {section:null, index:-1};
 
-    // —— Utilities ——
+    // ===== Utilities =====
     const $ = sel => document.querySelector(sel); const $$ = sel => Array.from(document.querySelectorAll(sel));
-    const pad=n=> (n<10?'0':'')+n; const fmtMoney=n=>'₱'+(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+    const pad=n=> (n<10?'0':'')+n; const pad2=n=> (n<10?'0':'')+n; const fmtMoney=n=>'₱'+(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
     function toDate(dateStr, timeStr){ const d = dateStr? new Date(dateStr+'T00:00:00') : new Date(); if(!timeStr) return d; const [h,m] = (timeStr||'').split(':').map(x=>parseInt(x||0,10)); d.setHours(h||0,m||0,0,0); return d; }
     const addMinutes=(date,mins)=>{ const d=new Date(date); d.setMinutes(d.getMinutes()+Number(mins||0)); return d; };
     const timeDiffMin=(a,b)=> Math.round((a-b)/60000);
@@ -290,9 +309,13 @@
     const autosave=()=>localStorage.setItem('callsheet.v1', JSON.stringify(data));
     const load=()=>{ const s=localStorage.getItem('callsheet.v1'); if(s) data=JSON.parse(s); };
 
-    function renderAll(){ renderProject(); renderTables(); renderPeople(); renderContacts(); renderCosts(); renderFloating(); updateStatus(); }
+    const plannedMs = r => Number(r.dur||0)*60000;
+    const elapsedMs = r => Number(r.elapsedMs||0) + (r.running && r.startedAt? (Date.now() - r.startedAt) : 0);
+    const fmtMMSScc = ms => { const v=Math.max(0, Math.floor(ms)); const mm=Math.floor(v/60000); const ss=Math.floor((v%60000)/1000); const cc=Math.floor((v%1000)/10); return `${pad(mm)}:${pad(ss)}.${pad2(cc)}`; };
 
-    // —— Project Header ——
+    function renderAll(){ renderProject(); renderTables(); renderPeople(); renderContacts(); renderCosts(); renderFloating(); updateStatus(); refreshTplUI(); }
+
+    // ===== Project Header =====
     const BRAND_LIST=["OXGN","Memo","Forme","Regatta","Bocu","Penshoppe"];
     function getBrandValue(){ const sel=$('#clientBrandSel'); return sel.value==='__custom'? ($('#clientBrandCustom').value||'') : sel.value; }
     function renderProject(){ $('#projectTitle').value=data.project.title||''; const sel=$('#clientBrandSel'), custom=$('#clientBrandCustom'); if(BRAND_LIST.includes(data.project.client)){ sel.value=data.project.client; custom.style.display='none'; } else if((data.project.client||'')===''){ sel.value=''; custom.style.display='none'; custom.value=''; } else { sel.value='__custom'; custom.style.display=''; custom.value=data.project.client; }
@@ -303,20 +326,19 @@
     let notesEditing=false; $('#editNotesBtn').addEventListener('click',()=>{ const ta=$('#projectNotes'); notesEditing=!notesEditing; if(notesEditing){ ta.readOnly=false; ta.focus(); $('#editNotesBtn').textContent='Save Notes'; } else { ta.readOnly=true; data.project.notes=ta.value; autosave(); $('#editNotesBtn').textContent='Edit Notes'; } });
     $('#lockShootStart').addEventListener('change',()=>{ data.project.lockShoot=$('#lockShootStart').checked; autosave(); recalcTimes(); });
 
-    // —— Schedule Rows ——
+    // ===== Schedule Rows =====
     const SHOOT_TYPES=['Duo','Solo','Group','Reel','Campaign','Socials'];
     const PHASE_TYPES=['Lighting','Styling','Video Campaign','Video Reels','Photo'];
 
-    function shootTypeSelect(val, idx){ const extra=(val && !SHOOT_TYPES.includes(val))? `<option selected>${val}</option>`:''; return `<select data-field="type" onchange=\"edit('shoot',${idx},'type',this.value)\"><option value=\"\">Select…</option>${SHOOT_TYPES.map(t=>`<option ${val===t?'selected':''}>${t}</option>`).join('')}${extra}</select>`; }
+    function shootTypeSelect(val, idx){ const extra=(val && !SHOOT_TYPES.includes(val))? `<option selected>${val}</option>`:''; return `<select data-field="type" onchange="edit('shoot',${idx},'type',this.value)"><option value="">Select…</option>${SHOOT_TYPES.map(t=>`<option ${val===t?'selected':''}>${t}</option>`).join('')}${extra}</select>`; }
 
     function imgOnlyCell(section,idx,key){ const img=(data[section][idx]||{})[key]; const has=!!img; return `<div class="thumbwrap"><label class="thumbbtn" title="${has?'Change image':'Upload image'}">${has?`<img src="${img}" alt="">`:''}<input type="file" accept="image/*" onchange="uploadCellImage(event,'${section}',${idx},'${key}')"></label>${has?`<button class='btn ghost' title='Clear' onclick="clearCellImage('${section}',${idx},'${key}')">×</button>`:''}</div>`; }
 
-    function phasesCell(rowIdx){ const r=data.shoot[rowIdx]||{}; const phases=r.phases||[]; const auto=r.autoPhases!==false; // default true
-      const rows = phases.map((p,pi)=>`<div class='phase-row'>
-        <select onchange=\"editPhase(${rowIdx},${pi},'label',this.value)\">${PHASE_TYPES.map(t=>`<option ${p.label===t?'selected':''}>${t}</option>`).join('')}</select>
-        <input type='time' step='60' value='${p.start||''}' onchange=\"editPhase(${rowIdx},${pi},'start',this.value,true)\" title='Phase start'>
-        <input type='number' min='0' step='1' value='${Number(p.mins||0)}' oninput=\"editPhase(${rowIdx},${pi},'mins',this.value,false,true)\" title='Minutes'>
-        <button class='btn danger' onclick=\"removePhase(${rowIdx},${pi})\">×</button>
+    function phasesCell(rowIdx){ const r=data.shoot[rowIdx]||{}; const phases=r.phases||[]; const auto=r.autoPhases!==false; const rows = phases.map((p,pi)=>`<div class='phase-row'>
+        <select onchange="editPhase(${rowIdx},${pi},'label',this.value)">${PHASE_TYPES.map(t=>`<option ${p.label===t?'selected':''}>${t}</option>`).join('')}</select>
+        <input type='time' step='60' value='${p.start||''}' onchange="editPhase(${rowIdx},${pi},'start',this.value,true)" title='Phase start'>
+        <input type='number' min='0' step='1' value='${Number(p.mins||0)}' oninput="editPhase(${rowIdx},${pi},'mins',this.value,false,true)" title='Minutes'>
+        <button class='btn danger' onclick="removePhase(${rowIdx},${pi})">×</button>
       </div>`).join('');
       return `<div class='phases'>${rows||`<div class='phase-tag'>No phases yet.</div>`}
         <div class='phase-tools'>
@@ -324,11 +346,10 @@
           <label class='phase-meta'><input type='checkbox' id='auto-${rowIdx}' ${auto?'checked':''} onchange="togglePhaseAuto(${rowIdx},this.checked)"> <span class='phase-tag'>Auto adjust to Layout Duration</span></label>
           <button class='btn primary' onclick="distributePhases(${rowIdx},true)">Auto-fill</button>
         </div>
-      </div>`;
-    }
+      </div>`; }
 
     function rowTemplate(section,row,idx){ const isPre = section==='pre'; return `<tr data-section="${section}" data-index="${idx}">
-      <td class="order"><button class="btn" onclick="moveRow('${section}',${idx},-1)" title="Move up">▲</button><button class="btn" onclick="moveRow('${section}',${idx},1)" title="Move down">▼</button></td>
+      <td class="order"><button class="btn" onclick="moveRow('${section}',${idx},-1)" title="Move up">↑</button><button class="btn" onclick="moveRow('${section}',${idx},1)" title="Move down">↓</button></td>
       <td><input data-field="label" value="${row.label||''}" oninput="edit('${section}',${idx},'label',this.value)" placeholder="${isPre?'Item (e.g., Call Time, Set‑up)':'Look / Layout #'}"></td>
       ${!isPre? `<td>${shootTypeSelect(row.type||'', idx)}</td>`:''}
       ${!isPre? `<td>${imgOnlyCell('shoot',idx,'locationImg')}</td>`:''}
@@ -337,24 +358,20 @@
       <td><input data-field="end" type="time" step="60" value="${row.end||''}" oninput="manualEnd('${section}',${idx},this.value)"></td>
       <td><input class="dur-input" data-field="dur" type="number" min="0" step="1" value="${row.dur||0}" oninput="edit('${section}',${idx},'dur',this.value); debounceRecalc()" placeholder="mins" inputmode="numeric"></td>
       ${!isPre? `<td>${phasesCell(idx)}</td>`:''}
-      <td><textarea class="noteBox" data-field="notes" oninput="edit('${section}',${idx},'notes',this.value)" title="Notes preview">${row.notes||''}</textarea></td>
+      <td class="notes"><textarea class="noteBox" data-field="notes" oninput="edit('${section}',${idx},'notes',this.value)" title="Notes preview">${row.notes||''}</textarea></td>
       <td class="actions no-print"><button class="btn warn" onclick="dupRow('${section}',${idx})">Dup</button><button class="btn danger" onclick="delRow('${section}',${idx})">Del</button></td>
     </tr>` }
 
     function renderTables(){ $('#tbody-pre').innerHTML=data.pre.map((r,i)=>rowTemplate('pre',r,i)).join(''); $('#tbody-shoot').innerHTML=data.shoot.map((r,i)=>rowTemplate('shoot',r,i)).join(''); refreshRowSelect(); }
 
     function syncFromDOM(section){ const rows=[]; const trs=section==='pre'? $$('#tbody-pre tr') : $$('#tbody-shoot tr'); trs.forEach((tr,i)=>{ const obj={}; obj.label=(tr.querySelector('input[data-field="label"]')||{}).value||''; if(section==='shoot'){ obj.type=(tr.querySelector('select[data-field="type"]')||{}).value||''; obj.locationImg=(data[section][i]||{}).locationImg||''; obj.wardrobeImg=(data[section][i]||{}).wardrobeImg||''; obj.phases=(data[section][i]||{}).phases||[]; obj.autoPhases=(data[section][i]||{}).autoPhases!==false; } obj.start=(tr.querySelector('input[data-field="start"]')||{}).value||''; obj.end=(tr.querySelector('input[data-field="end"]')||{}).value||''; obj.dur=Number(((tr.querySelector('input[data-field="dur"]')||{}).value)||0); obj.notes=(tr.querySelector('[data-field="notes"]')||{}).value||''; rows.push(obj); });
-      data[section]=rows.map((r,i)=>Object.assign({actual:(data[section][i]||{}).actual||0,running:false,delays:(data[section][i]||{}).delays||[]},r)); }
+      data[section]=rows.map((r,i)=>Object.assign({actual:(data[section][i]||{}).actual||0,running:false,delays:(data[section][i]||{}).delays||[], elapsedMs:(data[section][i]||{}).elapsedMs||0, startedAt:(data[section][i]||{}).startedAt||null},r)); }
 
-    function addRow(section){ if(section==='shoot'){ data[section].push({label:'',type:'',start:'',end:'',dur:30,notes:'',actual:0,running:false,delays:[],locationImg:'',wardrobeImg:'',phases:[],autoPhases:true}); } else { data[section].push({label:'',start:'',end:'',dur:10,notes:'',actual:0,running:false,delays:[]}); } autosave(); renderTables(); recalcTimes(); }
+    function addRow(section){ if(section==='shoot'){ data[section].push({label:'',type:'',start:'',end:'',dur:30,notes:'',actual:0,running:false,delays:[],locationImg:'',wardrobeImg:'',phases:[],autoPhases:true, elapsedMs:0, startedAt:null}); } else { data[section].push({label:'',start:'',end:'',dur:10,notes:'',actual:0,running:false,delays:[], elapsedMs:0, startedAt:null}); } autosave(); renderTables(); recalcTimes(); }
     function dupRow(section,idx){ data[section].splice(idx,0, JSON.parse(JSON.stringify(data[section][idx])) ); autosave(); renderTables(); recalcTimes(); }
     function delRow(section,idx){ data[section].splice(idx,1); if(active.section===section && active.index===idx){ active={section:null,index:-1}; } autosave(); renderTables(); recalcTimes(); renderFloating(); }
-    function moveRow(section,idx,dir){ const arr=data[section]; const j=idx+dir; if(j<0||j>=arr.length) return; // swap only label + dur
-      const tL=arr[idx].label; arr[idx].label=arr[j].label; arr[j].label=tL; const tD=arr[idx].dur; arr[idx].dur=arr[j].dur; arr[j].dur=tD; arr[idx].running=false; arr[j].running=false; autosave(); renderTables(); recalcTimes(); renderFloating(); }
-    function edit(section,idx,key,val){ data[section][idx][key]=key==='dur'?Number(val||0):val; autosave(); if(section==='shoot' && key==='dur'){ // adjust phases to fit new duration
-        distributePhases(idx,false);
-      }
-    }
+    function moveRow(section,idx,dir){ const arr=data[section]; const j=idx+dir; if(j<0||j>=arr.length) return; const tL=arr[idx].label; arr[idx].label=arr[j].label; arr[j].label=tL; const tD=arr[idx].dur; arr[idx].dur=arr[j].dur; arr[j].dur=tD; arr[idx].running=false; arr[j].running=false; autosave(); renderTables(); recalcTimes(); renderFloating(); }
+    function edit(section,idx,key,val){ data[section][idx][key]=key==='dur'?Number(val||0):val; autosave(); if(section==='shoot' && key==='dur'){ distributePhases(idx,false); } }
 
     async function uploadCellImage(e,section,idx,key){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ data[section][idx][key]=r.result; autosave(); renderTables(); }; r.readAsDataURL(f); }
     function clearCellImage(section,idx,key){ data[section][idx][key]=''; autosave(); renderTables(); }
@@ -369,62 +386,75 @@
     let recalcDebounce=null; function debounceRecalc(){ clearTimeout(recalcDebounce); recalcDebounce=setTimeout(()=>recalcTimes(true), 320); }
     function recalcTimes(fromDom=true){ if(fromDom){ syncFromDOM('pre'); syncFromDOM('shoot'); } const dayStart=toDate(data.project.date, data.project.dayStart||'08:00'); const locked=!!data.project.lockShoot; let t=new Date(dayStart); for(const r of data.pre){ r.start=hm(t); t=addMinutes(t, Number(r.dur||0)); r.end=hm(t); } const preEnd=new Date(t); let shootStartBase=toDate(data.project.date, data.project.shootStart||'10:00'); if(!locked && preEnd>shootStartBase){ shootStartBase=preEnd; } data.project.shootStart=hm(shootStartBase); t=new Date(shootStartBase); for(let i=0;i<data.shoot.length;i++){ const r=data.shoot[i]; r.start=hm(t); t=addMinutes(t, Number(r.dur||0)); r.end=hm(t); distributePhases(i,false); } data.project.wrapped=false; autosave(); renderTables(); refreshRowSelect(); renderFloating(); updateStatus(); }
 
-    // —— Phases logic ——
+    // ===== Phases logic =====
     function ensurePhases(idx){ const r=data.shoot[idx]; if(!r.phases || !Array.isArray(r.phases)){ r.phases=[]; } }
-    function addPhase(idx){ ensurePhases(idx); data.shoot[idx].phases.push({label:PHASE_TYPES[Math.min(data.shoot[idx].phases.length,PHASE_TYPES.length-1)], start:data.shoot[idx].start||'', mins:5}); data.shoot[idx].autoPhases = data.shoot[idx].autoPhases!==false; autosave(); distributePhases(idx,true); renderTables(); }
+    function addPhase(idx){ ensurePhases(idx); data.shoot[idx].phases.push({label:PHASE_TYPES[Math.min(data.shoot[idx].phases.length,PHASE_TYPES.length-1)], start:'', mins:5}); data.shoot[idx].autoPhases = data.shoot[idx].autoPhases!==false; autosave(); distributePhases(idx,true); renderTables(); }
     function removePhase(idx,pi){ ensurePhases(idx); data.shoot[idx].phases.splice(pi,1); autosave(); distributePhases(idx,true); renderTables(); }
     function togglePhaseAuto(idx,on){ ensurePhases(idx); data.shoot[idx].autoPhases=!!on; autosave(); distributePhases(idx,true); renderTables(); }
     function editPhase(idx,pi,key,val,keepAuto=false,manualMins=false){ ensurePhases(idx); if(key==='mins'){ data.shoot[idx].phases[pi].mins=Number(val||0); if(manualMins){ data.shoot[idx].autoPhases=false; } }
-      else if(key==='start'){ data.shoot[idx].phases[pi].start=val; // manual start breaks auto start order
-        data.shoot[idx].autoPhases=false;
+      else if(key==='start'){ data.shoot[idx].phases[pi].start=val; data.shoot[idx].autoPhases=false;
       } else { data.shoot[idx].phases[pi][key]=val; }
       autosave(); distributePhases(idx,keepAuto); renderTables(); }
 
     function distributePhases(idx,forceEven){ const r=data.shoot[idx]; ensurePhases(idx); const n=r.phases.length; if(n===0){ return; }
       const layoutDur=Number(r.dur||0); const start=r.start||data.project.shootStart||'00:00'; const base=toDate(data.project.date,start);
-      // Decide rule: if autoPhases true OR forceEven => even split; else scale proportionally to fit total
       const auto = (r.autoPhases!==false) || !!forceEven;
       if(auto){ const each = Math.floor(layoutDur / n); let rem = layoutDur - (each*(n-1)); for(let i=0;i<n;i++){ const mins = (i===n-1)? rem : each; r.phases[i].mins = mins<0?0:mins; const sDate = (i===0)? base : addMinutes(toDate(data.project.date, r.phases[i-1].start), r.phases[i-1].mins);
           r.phases[i].start = hm(sDate); }
       } else {
         const sum = r.phases.reduce((s,p)=>s+Number(p.mins||0),0);
-        if(sum<=0){ // fallback to even
-          const each = Math.floor(layoutDur / n); let rem = layoutDur - (each*(n-1)); for(let i=0;i<n;i++){ r.phases[i].mins = (i===n-1)? rem : each; r.phases[i].start = hm(i===0? base : addMinutes(toDate(data.project.date,r.phases[i-1].start), r.phases[i-1].mins)); }
-        } else {
-          // scale proportionally to fit layoutDur
-          let acc=0; for(let i=0;i<n;i++){ const scaled = Math.round((Number(r.phases[i].mins||0) * layoutDur) / sum); r.phases[i].mins = scaled; acc+=scaled; }
-          // fix rounding on last
+        if(sum<=0){ const each = Math.floor(layoutDur / n); let rem = layoutDur - (each*(n-1)); for(let i=0;i<n;i++){ r.phases[i].mins = (i===n-1)? rem : each; r.phases[i].start = hm(i===0? base : addMinutes(toDate(data.project.date,r.phases[i-1].start), r.phases[i-1].mins)); }
+        } else { let acc=0; for(let i=0;i<n;i++){ const scaled = Math.round((Number(r.phases[i].mins||0) * layoutDur) / sum); r.phases[i].mins = scaled; acc+=scaled; }
           r.phases[n-1].mins += (layoutDur - acc);
           for(let i=0;i<n;i++){ r.phases[i].start = hm(i===0? base : addMinutes(toDate(data.project.date,r.phases[i-1].start), r.phases[i-1].mins)); }
         }
       }
       autosave(); }
 
-    // —— Floating timer & status ——
-    let tickHandle=null; let tickAnchor=Date.now();
+    // ===== Floating timer & status =====
+    let rafId=null; let lastAutosaveTs=0;
+    const anyRunning = () => ([...data.pre, ...data.shoot].some(r=>r.running));
+
     function refreshRowSelect(){ const sel=$('#ft-rowSel'); if(!sel) return; const opts=[]; (data.pre||[]).forEach((r,i)=>opts.push({k:`pre:${i}`,t:`Pre ${i+1} — ${r.label||'(untitled)'}`})); (data.shoot||[]).forEach((r,i)=>opts.push({k:`shoot:${i}`,t:`Shoot ${i+1} — ${r.label||'(untitled)'}`})); sel.innerHTML=opts.map(o=>`<option value="${o.k}">${o.t}</option>`).join(''); if(active.section){ sel.value=`${active.section}:${active.index}`; } sel.onchange=()=>{ const [sec,idx]=sel.value.split(':'); active={section:sec,index:parseInt(idx,10)}; renderFloating(); updateStatus(); }; }
 
-    function ensureTick(){ if(tickHandle) return; tickAnchor=Date.now(); tickHandle=setInterval(()=>{ ['pre','shoot'].forEach(sec=> data[sec].forEach(r=>{ if(r.running){ r.actual=(r.actual||0)+1; } })); autosave(); renderFloating(); updateStatus(); },60*1000); }
+    function startTicker(){ if(rafId) return; lastAutosaveTs=Date.now(); const loop=()=>{ const now=Date.now(); let minChanged=false; ['pre','shoot'].forEach(sec=> data[sec].forEach(r=>{ if(r.running||r.elapsedMs){ const m = Math.floor(elapsedMs(r)/60000); if(m!==Number(r.actual||0)){ r.actual=m; minChanged=true; } } }));
+        renderFloating(); updateStatus();
+        if(minChanged || (now-lastAutosaveTs)>10000){ autosave(); lastAutosaveTs=now; }
+        if(anyRunning()){ rafId=requestAnimationFrame(loop); } else { rafId=null; }
+    }; rafId=requestAnimationFrame(loop); }
+
     function toggleTimer(){ if(active.index<0){ const sel=$('#ft-rowSel'); if(sel&&sel.value){ const [sec,idx]=sel.value.split(':'); active={section:sec,index:parseInt(idx,10)}; } }
-      if(active.index<0) return; const r=data[active.section][active.index]; r.running=!r.running; if(r.running) ensureTick(); autosave(); renderFloating(); updateStatus(); }
-    function applyActual(){ if(active.index<0) return; const r=data[active.section][active.index]; r.dur=Math.round(r.actual||0); autosave(); recalcTimes(false); }
-    function nextLayout(){ if(active.index<0) return; const sec=active.section, idx=active.index; const r=data[sec][idx]; if((r.actual||0)>0) applyActual(); r.running=false; let nSec=sec,nIdx=idx+1; if(nSec==='pre' && nIdx>=data.pre.length){ nSec='shoot'; nIdx=0; } if(nSec==='shoot' && nIdx>=data.shoot.length){ active={section:null,index:-1}; data.project.wrapped=true; updateStatus(); renderFloating(); return; } active={section:nSec,index:nIdx}; data[nSec][nIdx].running=true; ensureTick(); autosave(); renderFloating(); updateStatus(); }
+      if(active.index<0) return; const r=data[active.section][active.index]; r.running=!r.running; if(r.running){ r.startedAt=Date.now(); startTicker(); } else { if(r.startedAt){ r.elapsedMs=Number(r.elapsedMs||0)+(Date.now()-r.startedAt); } r.startedAt=null; }
+      autosave(); renderFloating(); updateStatus(); }
+
+    function applyActual(){ if(active.index<0) return; const r=data[active.section][active.index]; const totalMs=elapsedMs(r); r.dur=Math.max(0, Math.round(totalMs/60000)); autosave(); recalcTimes(false); }
+
+    function nextLayout(){ if(active.index<0) return; const sec=active.section, idx=active.index; const r=data[sec][idx]; if(r.running && r.startedAt){ r.elapsedMs=Number(r.elapsedMs||0)+(Date.now()-r.startedAt); r.startedAt=null; } if(elapsedMs(r)>0) applyActual(); r.running=false; let nSec=sec,nIdx=idx+1; if(nSec==='pre' && nIdx>=data.pre.length){ nSec='shoot'; nIdx=0; } if(nSec==='shoot' && nIdx>=data.shoot.length){ active={section:null,index:-1}; data.project.wrapped=true; updateStatus(); renderFloating(); return; } active={section:nSec,index:nIdx}; data[nSec][nIdx].running=true; data[nSec][nIdx].startedAt=Date.now(); startTicker(); autosave(); renderFloating(); updateStatus(); }
+    function nextPhase(){ if(active.index<0) return; const r=data[active.section][active.index]; const phases=r.phases||[]; if(!phases.length){ nextLayout(); return; } const e=elapsedMs(r); let sum=0, idx=-1; for(let i=0;i<phases.length;i++){ const end=sum + Number(phases[i].mins||0)*60000; if(e < end){ idx=i; break; } sum=end; } if(idx===-1){ nextLayout(); return; } if(idx < phases.length-1){ startPhaseNow(idx+1); } else { nextLayout(); } autosave(); renderFloating(); updateStatus(); }
+
     function addDelayToActive(){ const sel=$('#ft-rowSel'); if(sel&&sel.value){ const [sec,idx]=sel.value.split(':'); active={section:sec,index:parseInt(idx,10)}; }
-      if(active.index<0) return; const r=data[active.section][active.index]; const mins=Number($('#ft-delayMin').value||0); const note=$('#ft-delayNote').value||''; if(!mins) return; r.delays=r.delays||[]; r.delays.push({mins,note,at:new Date().toISOString()}); r.dur=Number(r.dur||0)+mins; r.notes=(r.notes||'')+(note?` | Delay: +${mins}m — ${note}`:` | Delay: +${mins}m`); $('#ft-delayNote').value=''; autosave(); recalcTimes(false); }
+      if(active.index<0) return; const r=data[active.section][active.index]; const mins=Number($('#ft-delayMin').value||0); const note=$('#ft-delayNote').value||''; if(!mins) return; r.delays=r.delays||[]; r.delays.push({mins,note,at:new Date().toISOString()}); r.dur=Number(r.dur||0)+mins; r.notes=(r.notes||'')+(note?` | Delay: +${mins}m — ${note}`:` | Delay: +${mins}m`); $('#ft-delayNote').value=''; $('#ft-delayMin').value=''; autosave(); recalcTimes(false); }
 
-    function renderFloating(){ const pnl=$('#floating'); pnl.style.display='block'; const ttl=$('#ft-title'), rem=$('#ft-remaining'), st=$('#ft-status'), tog=$('#ft-toggle'), nxt=$('#ft-next'), delog=$('#ft-delays'); if(active.index<0){ ttl.textContent='No active row'; rem.textContent='--:--'; st.textContent='—'; tog.textContent='Start'; tog.disabled=true; nxt.disabled=true; delog.textContent='No delays logged.'; return; } const r=data[active.section][active.index]; ttl.textContent=`${active.section==='pre'?'Pre‑Shoot':'Shoot'} · ${r.label||'(untitled)'}`; const remainMin=Math.max(0, Number(r.dur||0) - Number(r.actual||0)); const since=Math.floor((Date.now()-tickAnchor)/1000); const secToNext=(60 - (since%60))%60; const totalSec=remainMin*60 + (r.running?secToNext:0); const mm=Math.floor(totalSec/60), ss=totalSec%60; rem.textContent=`${pad(mm)}:${pad(ss)}`; st.textContent=r.running?'Running':'Paused'; st.className='chip'; tog.textContent=r.running?'Pause':'Start'; tog.disabled=false; nxt.disabled=false; delog.textContent=(r.delays&&r.delays.length)? r.delays.map(d=>`+${d.mins}m ${d.note||''}`).join('; ') : 'No delays logged.'; }
-    $('#ft-toggle').onclick=toggleTimer; $('#ft-next').onclick=nextLayout; $('#ft-addDelay').onclick=addDelayToActive;
+    function startPhaseNow(targetIndex){ if(active.index<0) return; const r=data[active.section][active.index]; const phases=r.phases||[]; if(!phases.length) return; if(targetIndex<0 || targetIndex>=phases.length) return; const e = elapsedMs(r);
+      let currIdx=0, sumBefore=0; for(let i=0;i<phases.length;i++){ const end=sumBefore + Number(phases[i].mins||0)*60000; if(e < end){ currIdx=i; break; } sumBefore=end; if(i===phases.length-1){ currIdx=phases.length-1; } }
+      const sumBeforeCurr = sumBefore; const actualCurrMs = Math.max(0, e - sumBeforeCurr); phases[currIdx].mins = Math.max(0, Math.round(actualCurrMs/60000)); if(targetIndex>currIdx+1){ for(let j=currIdx+1;j<targetIndex;j++){ phases[j].mins = 0; } } r.autoPhases=false; autosave(); renderFloating(); updateStatus(); }
 
-    function computeStatus(){ if(data.project.wrapped) return {cls:'status-wrap',label:'Wrap'}; if(active.index>=0){ const r=data[active.section][active.index]; if(Number(r.actual||0)>Number(r.dur||0)) return {cls:'status-delayed',label:'Delayed'}; if(r.running) return {cls:'status-live',label:'On Set'}; } const anyRunning=[...data.pre,...data.shoot].some(r=>r.running); if(anyRunning) return {cls:'status-live',label:'On Set'}; return {cls:'status-planning',label:'Planning'}; }
+    function renderPhaseMiniList(r){ const cont=$('#ft-phases'); if(!cont) return; const phases=r.phases||[]; if(!phases.length){ cont.innerHTML='<div class="pill">No phases set for this layout.</div>'; return; }
+      const e=elapsedMs(r); let totals=phases.map(p=>Number(p.mins||0)*60000), cum=0, currentIdx=-1, nextIdx=-1; for(let i=0;i<phases.length;i++){ const end=cum+totals[i]; if(e<end){ currentIdx=i; nextIdx=i+1; break; } cum=end; } if(currentIdx===-1){ currentIdx=phases.length-1; nextIdx=phases.length; }
+      let accMs=0; const html=phases.map((p,i)=>{ const durMs=Number(p.mins||0)*60000; const startMs=accMs; const endMs=accMs+durMs; let cls='pending'; let frac=0; let right='+'+(p.mins||0)+'m'; if(e>=endMs){ cls='done'; frac=1; right='done'; } else if(e>=startMs){ cls='current'; const inMs=e-startMs; frac=durMs? Math.min(1,inMs/durMs):1; const remain=Math.max(0,durMs-inMs); right='–'+fmtMMSScc(remain); } const w=Math.round(frac*100); const label=(p.label||('Phase '+(i+1))); let btn=''; if(i===currentIdx && i<phases.length-1){ btn = `<button class="mini-btn" onclick="startPhaseNow(${i+1})">Next</button>`; } else if(i===nextIdx){ btn = `<button class="mini-btn" onclick="startPhaseNow(${i})">Start</button>`; } accMs+=durMs; return `<div class="phase-mini ${cls}"><div class="label">${label}</div><div class="bar"><span style="width:${w}%"></span></div><div class="time">${right}</div>${btn?`<div>${btn}</div>`:''}</div>`; }).join(''); cont.innerHTML=`<div class="phase-mini-list">${html}</div>`; }
+
+    function renderFloating(){ const pnl=$('#floating'); pnl.style.display='block'; const ttl=$('#ft-title'), rem=$('#ft-remaining'), st=$('#ft-status'), tog=$('#ft-toggle'), nxt=$('#ft-next'), nxtL=$('#ft-nextLayout'), delog=$('#ft-delays'); if(active.index<0){ ttl.textContent='No active row'; rem.textContent='--:--.--'; st.textContent='—'; tog.textContent='Start'; tog.disabled=true; if(nxt) nxt.disabled=true; if(nxtL) nxtL.disabled=true; delog.textContent='No delays logged.'; $('#ft-phases').innerHTML=''; return; } const r=data[active.section][active.index]; ttl.textContent=`${active.section==='pre'?'Pre‑Shoot':'Shoot'} • ${r.label||'(untitled)'}`; const remaining=Math.max(0, plannedMs(r) - elapsedMs(r)); rem.textContent=fmtMMSScc(remaining); st.textContent=r.running?'Running':'Paused'; st.className='chip'; tog.textContent=r.running?'Pause':'Start'; tog.disabled=false; if(nxt) nxt.disabled=false; if(nxtL) nxtL.disabled=false; delog.textContent=(r.delays&&r.delays.length)? r.delays.map(d=>`+${d.mins}m ${d.note||''}`).join('; ') : 'No delays logged.'; renderPhaseMiniList(r); }
+    $('#ft-toggle').onclick=toggleTimer; $('#ft-next').onclick=nextPhase; $('#ft-nextLayout').onclick=nextLayout; $('#ft-addDelay').onclick=addDelayToActive;
+
+    function computeStatus(){ if(data.project.wrapped) return {cls:'status-wrap',label:'Wrap'}; if(active.index>=0){ const r=data[active.section][active.index]; if(elapsedMs(r) > plannedMs(r)) return {cls:'status-delayed',label:'Delayed'}; if(r.running) return {cls:'status-live',label:'On Set'}; } const anyRun=[...data.pre,...data.shoot].some(r=>r.running); if(anyRun) return {cls:'status-live',label:'On Set'}; return {cls:'status-planning',label:'Planning'}; }
     function updateStatus(){ const sb=$('#statusBig'); const st=computeStatus(); sb.className='status-banner '+st.cls; sb.textContent=st.label; }
 
-    // Drag & Minimize for floating
-    ;(function(){ const panel=$('#floating'); const head=$('#ft-head'); const minBtn=$('#ft-min'); const resetBtn=$('#ft-resetPos');
+    (function(){ const panel=$('#floating'); const head=$('#ft-head'); const minBtn=$('#ft-min'); const resetBtn=$('#ft-resetPos');
       minBtn.addEventListener('click',()=>{ panel.classList.toggle('min'); });
       resetBtn.addEventListener('click',()=>{ panel.style.left='auto'; panel.style.top='auto'; panel.style.right='16px'; panel.style.bottom='16px'; });
       let dragging=false, sx=0, sy=0, startL=0, startT=0; head.addEventListener('mousedown',e=>{ dragging=true; sx=e.clientX; sy=e.clientY; const rect=panel.getBoundingClientRect(); startL=rect.left; startT=rect.top; e.preventDefault(); }); document.addEventListener('mousemove',e=>{ if(!dragging) return; const nl=startL+(e.clientX-sx); const nt=startT+(e.clientY-sy); panel.style.left=Math.max(0, nl)+'px'; panel.style.top=Math.max(0, nt)+'px'; panel.style.right='auto'; panel.style.bottom='auto'; }); document.addEventListener('mouseup',()=>{ dragging=false; }); })();
 
-    // —— People / Contacts / Costs ——
+    // ===== People / Contacts / Costs =====
     function personRow(p,i){ return `<tr><td><input value="${p.role||''}" oninput="editPerson(${i},'role',this.value)"></td><td><input value="${p.name||''}" oninput="editPerson(${i},'name',this.value)"></td><td><input value="${p.phone||''}" oninput="editPerson(${i},'phone',this.value)"></td><td><input value="${p.email||''}" oninput="editPerson(${i},'email',this.value)"></td><td><input value="${p.affil||''}" oninput="editPerson(${i},'affil',this.value)" placeholder="Affiliation"></td><td><input type="time" step="60" value="${p.calltime||''}" oninput="editPerson(${i},'calltime',this.value)"></td><td><input value="${p.notes||''}" oninput="editPerson(${i},'notes',this.value)"></td><td class="no-print"><button class="btn danger" onclick="delPerson(${i})">Del</button></td></tr>` }
     function renderPeople(){ $('#tbody-people').innerHTML=data.people.map(personRow).join('') }
     function addPerson(){ data.people.push({role:'',name:'',phone:'',email:'',affil:'',calltime:'',notes:''}); autosave(); renderPeople(); }
@@ -445,14 +475,14 @@
     async function uploadReceipt(e,i){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ data.costs[i].receipt=r.result; autosave(); renderCosts(); e.target.value=''; }; r.readAsDataURL(f); }
     function updateCostTotal(){ const tot=data.costs.reduce((s,c)=>s+Number(c.amt||0),0); $('#costTotal').textContent=fmtMoney(tot); }
 
-    // Tabs
+    // ===== Tabs =====
     $$('.tab').forEach(btn=>{ btn.addEventListener('click',()=>{ $$('.tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const id='tab-'+btn.dataset.tab; $$('.content').forEach(c=>c.classList.remove('active')); $('#'+id).classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }); });
 
-    // Export / Import
+    // ===== Export / Import (full project JSON) =====
     $('#exportJson').addEventListener('click',()=>{ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=(data.project.title||'callsheet')+'.json'; a.click(); URL.revokeObjectURL(a.href); });
     $('#importJson').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ data=JSON.parse(r.result); autosave(); renderAll(); recalcTimes(); }catch(err){ alert('Invalid JSON') } }; r.readAsText(f); e.target.value=''; });
 
-    // Build printable report (with phases)
+    // ===== Printable report =====
     function printableHTML(){
       const delaySum=r=>(r.delays&&r.delays.length)? r.delays.map(d=>`+${d.mins}m ${d.note||''}`).join('; '):'';
       const preRows=data.pre.map(r=>[r.label,r.start,r.end,r.dur,(r.notes||'')+(delaySum(r)?' — Delays: '+delaySum(r):'')]);
@@ -460,29 +490,22 @@
         const header=['Look/Layout #','Type','Location','Wardrobe','Start','End','Dur','Phases','Notes'];
         const th=`<tr>${header.map(h=>`<th>${h}</th>`).join('')}</tr>`;
         const rows=data.shoot.map(r=>{
-          const loc = r.locationImg? `<img class=\"pimg\" src=\"${r.locationImg}\" alt=\"\">` : '';
-          const ward = r.wardrobeImg? `<img class=\"pimg\" src=\"${r.wardrobeImg}\" alt=\"\">` : '';
+          const loc = r.locationImg? `<img class="pimg" src="${r.locationImg}" alt="">` : '';
+          const ward = r.wardrobeImg? `<img class="pimg" src="${r.wardrobeImg}" alt="">` : '';
           const phases = (r.phases||[]).map(p=>`${p.label||''} ${p.start||''} (+${p.mins||0}m)`).join(' • ');
           const notes = (r.notes||'') + (delaySum(r)? ' — Delays: '+delaySum(r):'');
           return `<tr><td>${(r.label||'').replace(/</g,'&lt;')}</td><td>${(r.type||'').replace(/</g,'&lt;')}</td><td>${loc}</td><td>${ward}</td><td>${r.start||''}</td><td>${r.end||''}</td><td>${r.dur||''}</td><td>${phases.replace(/</g,'&lt;')}</td><td>${notes.replace(/</g,'&lt;')}</td></tr>`;
         }).join('');
         return `<thead>${th}</thead><tbody>${rows}</tbody>`;
       }
-      return `<!doctype html><html><head><meta charset=\"utf-8\"><title>${(data.project.title||'Callsheet').replace(/</g,'&lt;')}</title>
-      <style>
-        body{font-family:system-ui,Segoe UI,Roboto,Arial;padding:16px;color:#000}
-        table{width:100%;border-collapse:collapse;margin:10px 0}
-        th,td{border:1px solid #ddd;padding:6px 8px;font-size:12px;text-align:left;vertical-align:top}
-        h1,h2{margin:8px 0}
-        .pimg{width:160px;height:160px;object-fit:cover;border:1px solid #ccc;border-radius:6px}
-        @page{size:A4;margin:10mm}
-      </style></head>
+      return `<!doctype html><html><head><meta charset="utf-8"><title>${(data.project.title||'Callsheet').replace(/</g,'&lt;')}</title>
+      <style>body{font-family:system-ui,Segoe UI,Roboto,Arial;padding:16px;color:#000}table{width:100%;border-collapse:collapse;margin:10px 0}th,td{border:1px solid #ddd;padding:6px 8px;font-size:12px;text-align:left;vertical-align:top}h1,h2{margin:8px 0}.pimg{width:160px;height:160px;object-fit:cover;border:1px solid #ccc;border-radius:6px}@page{size:A4;margin:10mm}</style></head>
       <body>
         <h1>Callsheet</h1>
-        <div><strong>${(data.project.title||'').replace(/</g,'&lt;')}</strong> · ${(data.project.client||'').replace(/</g,'&lt;')}</div>
-        <div style=\"margin:6px 0 14px\"><em>${(data.project.notes||'').replace(/</g,'&lt;')}</em></div>
+        <div><strong>${(data.project.title||'').replace(/</g,'&lt;')}</strong> • ${(data.project.client||'').replace(/</g,'&lt;')}</div>
+        <div style="margin:6px 0 14px"><em>${(data.project.notes||'').replace(/</g,'&lt;')}</em></div>
         <h2>Pre‑Shoot</h2>
-        <table>${`<thead><tr><th>Item</th><th>Start</th><th>End</th><th>Dur (min)</th><th>Notes</th></tr></thead><tbody>${preRows.map(r=>`<tr>${r.map(v=>`<td>${(v||'').toString().replace(/</g,'&lt;')}</td>`).join('')}</tr>`).join('')}</tbody>`}</table>
+        <table>${`<thead><tr><th>Item</th><th>Start</th><th>End</th><th>Dur (min)</th><th class="notes">Notes</th></tr></thead><tbody>${preRows.map(r=>`<tr>${r.map(v=>`<td>${(v||'').toString().replace(/</g,'&lt;')}</td>`).join('')}</tr>`).join('')}</tbody>`}</table>
         <h2>Shoot Proper</h2>
         <table>${shootTable()}</table>
         <h2>Manpower</h2>
@@ -497,11 +520,50 @@
 
     $('#saveNow').addEventListener('click',autosave); $('#resetAll').addEventListener('click',()=>{ if(confirm('Clear all data?')){ data=emptyData(); autosave(); renderAll(); } })
 
-    // Init with sample skeleton (spacious defaults)
-    function seed(){ if(data.pre.length || data.shoot.length) return; data.project = { title:'Project Name', client:'Brand', date:new Date().toISOString().slice(0,10), location:'Studio / On‑Location', dayStart:'18:00', shootStart:'22:00', lockShoot:true, notes:'Bring umbrellas, water, fans.', wrapped:false }; data.pre = [ {label:'Call Time (Prod Team) — Equipment Prep', dur:90, notes:'', start:'', end:'', actual:0, running:false, delays:[]}, {label:'Call Time (Models + HMUA + Mktg)', dur:15, notes:'', start:'', end:'', actual:0, running:false, delays:[]}, {label:'Dinner', dur:30, notes:'', start:'', end:'', actual:0, running:false, delays:[]}, {label:'HMU (2 Models)', dur:90, notes:'', start:'', end:'', actual:0, running:false, delays:[]}, {label:'Transfer to DC', dur:15, notes:'', start:'', end:'', actual:0, running:false, delays:[]}, {label:'Ingress / Set‑up', dur:60, notes:'', start:'', end:'', actual:0, running:false, delays:[]} ]; data.shoot = [ {label:'SET‑UP / STYLING', type:'Solo', dur:30, notes:'', start:'', end:'', actual:0, running:false, delays:[], locationImg:'', wardrobeImg:'', phases:[{label:'Lighting',start:'',mins:10},{label:'Styling',start:'',mins:10},{label:'Photo',start:'',mins:10}], autoPhases:true}, {label:'LAYOUT 1 (INDOOR)', type:'Group', dur:40, notes:'', start:'', end:'', actual:0, running:false, delays:[], locationImg:'', wardrobeImg:'', phases:[{label:'Lighting',start:'',mins:10},{label:'Video Campaign',start:'',mins:15},{label:'Photo',start:'',mins:15}], autoPhases:true} ]; }
+    // ===== Template Manager =====
+    const TPL_KEY='callsheet.templates.v1';
+    const TPL_DEFAULT_KEY='callsheet.templates.defaultName';
+    const tplGetAll = ()=>{ try{ return JSON.parse(localStorage.getItem(TPL_KEY)||'[]'); }catch{ return []; } };
+    const tplSaveAll = (arr)=> localStorage.setItem(TPL_KEY, JSON.stringify(arr));
+    const tplFind = (name)=> tplGetAll().find(t=>t.name===name);
+    const deepClone = (obj)=> JSON.parse(JSON.stringify(obj));
+
+    function refreshTplUI(){ const sel=$('#tplSelect'); if(!sel) return; const arr=tplGetAll(); const def=localStorage.getItem(TPL_DEFAULT_KEY)||''; sel.innerHTML = arr.length? arr.map(t=>`<option ${t.name===def?'selected':''}>${t.name}</option>`).join('') : '<option value="">(no templates)</option>'; $('#tplDefaultChk').checked = !!def && sel.value===def; }
+
+    function tplSaveAs(){ const name = prompt('Template name? (e.g., OXGN Lookbook Base)'); if(!name) return; const arr=tplGetAll(); const idx=arr.findIndex(t=>t.name===name); const payload = {name, data: deepClone(data)}; if(idx>=0){ if(!confirm('Overwrite existing template with the same name?')) return; arr[idx]=payload; } else { arr.push(payload); } tplSaveAll(arr); refreshTplUI(); alert('Template saved.'); }
+
+    function tplLoad(){ const name=$('#tplSelect').value; const t=tplFind(name); if(!t){ alert('No template selected.'); return; } data = deepClone(t.data); autosave(); renderAll(); recalcTimes(); }
+
+    function tplDelete(){ const name=$('#tplSelect').value; if(!name) return; const arr=tplGetAll().filter(t=>t.name!==name); tplSaveAll(arr); if(localStorage.getItem(TPL_DEFAULT_KEY)===name){ localStorage.removeItem(TPL_DEFAULT_KEY); } refreshTplUI(); alert('Template deleted.'); }
+
+    function tplExport(){ const name=$('#tplSelect').value; const t=tplFind(name); if(!t){ alert('Select a template first.'); return; } const blob=new Blob([JSON.stringify(t.data,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name.replace(/\s+/g,'_')+'.template.json'; a.click(); URL.revokeObjectURL(a.href); }
+
+    function tplImportFile(e){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const payload=JSON.parse(r.result); const name = prompt('Name this imported template:'); if(!name) return; const arr=tplGetAll(); arr.push({name, data: payload}); tplSaveAll(arr); refreshTplUI(); alert('Template imported.'); }catch(err){ alert('Invalid template file.'); } }; r.readAsText(f); e.target.value=''; }
+
+    function tplCopyShareLink(){ const name=$('#tplSelect').value; const t=tplFind(name); if(!t){ alert('Select a template first.'); return; } const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(t.data)))); const url = location.origin + location.pathname + '?tpl=' + encoded; navigator.clipboard.writeText(url).then(()=> alert('Share link copied to clipboard!')).catch(()=> alert('Could not copy. Link:\n'+url)); }
+
+    function tplLoadFromURL(){ const m=location.search.match(/[?&]tpl=([^&]+)/); if(!m) return; try{ const json = decodeURIComponent(escape(atob(m[1]))); const payload = JSON.parse(json); const name = prompt('Save incoming shared template as (name):','Shared Template'); if(!name) return; const arr=tplGetAll(); arr.push({name, data: payload}); tplSaveAll(arr); refreshTplUI(); alert('Shared template saved. You can now select it from the Templates dropdown.'); history.replaceState({}, document.title, location.pathname); }catch(e){ console.warn('Invalid tpl param'); }
+    }
+
+    function tplSetDefaultToggle(){ const sel=$('#tplSelect'); if(!sel || !sel.value){ $('#tplDefaultChk').checked=false; return; } if($('#tplDefaultChk').checked){ localStorage.setItem(TPL_DEFAULT_KEY, sel.value); } else { localStorage.removeItem(TPL_DEFAULT_KEY); }
+    }
+
+    // wire up template UI
+    $('#tplSaveAs').addEventListener('click', tplSaveAs);
+    $('#tplLoad').addEventListener('click', tplLoad);
+    $('#tplDelete').addEventListener('click', tplDelete);
+    $('#tplExport').addEventListener('click', tplExport);
+    $('#tplImport').addEventListener('change', tplImportFile);
+    $('#tplShare').addEventListener('click', tplCopyShareLink);
+    $('#tplDefaultChk').addEventListener('change', tplSetDefaultToggle);
+
+    // ===== Boot =====
+    function seed(){ if(data.pre.length || data.shoot.length) return; data.project = { title:'Project Name', client:'Brand', date:new Date().toISOString().slice(0,10), location:'Studio / On‑Location', dayStart:'18:00', shootStart:'22:00', lockShoot:true, notes:'Bring umbrellas, water, fans.', wrapped:false }; data.pre = [ {label:'Call Time (Prod Team) — Equipment Prep', dur:90, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Call Time (Models + HMUA + Mktg)', dur:15, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Dinner', dur:30, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'HMU (2 Models)', dur:90, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Transfer to DC', dur:15, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Ingress / Set‑up', dur:60, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null} ]; data.shoot = [ {label:'SET‑UP / STYLING', type:'Solo', dur:30, notes:'', start:'', end:'', actual:0, running:false, delays:[], locationImg:'', wardrobeImg:'', phases:[{label:'Lighting',start:'',mins:10},{label:'Styling',start:'',mins:10},{label:'Photo',start:'',mins:10}], autoPhases:true, elapsedMs:0, startedAt:null}, {label:'LAYOUT 1 (INDOOR)', type:'Group', dur:40, notes:'', start:'', end:'', actual:0, running:false, delays:[], locationImg:'', wardrobeImg:'', phases:[{label:'Lighting',start:'',mins:10},{label:'Video Campaign',start:'',mins:15},{label:'Photo',start:'',mins:15}], autoPhases:true, elapsedMs:0, startedAt:null} ]; }
+
+    function maybeLoadDefaultTemplate(){ const def=localStorage.getItem(TPL_DEFAULT_KEY); if(def){ const t=tplFind(def); if(t){ data = deepClone(t.data); }} }
 
     // Boot
-    load(); seed(); renderAll(); recalcTimes();
+    load(); maybeLoadDefaultTemplate(); seed(); renderAll(); recalcTimes(); tplLoadFromURL();
   </script>
 </body>
 </html>
