@@ -565,134 +565,46 @@ th.notes, td.notes{min-width:240px;}
 
     // Boot
     load(); maybeLoadDefaultTemplate(); seed(); renderAll(); recalcTimes(); tplLoadFromURL();
-// === CONFIG ===
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzVtIGY_z2JBzGRZ9Qysc-2PD8eWlc1D221mQjUw8laP87HDNS_lPKKRNJ55h_ioUNGvA/exec; 
+const NETLIFY_UPLOAD = 'https://backendmarcomms.netlify.app/.netlify/functions/upload';
 
 function slugify(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,60); }
-function buildProjectId(){
-  const title = (data.project?.title || 'callsheet');
-  const date  = (data.project?.date || '').replace(/[^0-9]/g,''); // YYYYMMDD
-  return `${slugify(title)}-${date}`;
-}
-function buildRowId(index){
-  const rowNo = (index+1).toString().padStart(2,'0');
-  return `shoot-${rowNo}`;
-}
-
-// Draw image covering rect (object-fit: cover)
+function buildProjectId(){ const t=(data.project?.title||'callsheet'); const d=(data.project?.date||'').replace(/[^0-9]/g,''); return `${slugify(t)}-${d}`; }
 function drawCover(ctx, img, dx, dy, dW, dH){
-  const sW = img.naturalWidth || img.width;
-  const sH = img.naturalHeight || img.height;
-  const tRatio = dW/dH, sRatio = sW/sH;
-  let sx, sy, sw, sh;
-  if (sRatio > tRatio) { sh = sH; sw = sh * tRatio; sx = (sW - sw)/2; sy = 0; }
-  else { sw = sW; sh = sw / tRatio; sx = 0; sy = (sH - sh)/2; }
-  ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dW, dH);
+  const sW=img.naturalWidth||img.width, sH=img.naturalHeight||img.height, tR=dW/dH, sR=sW/sH;
+  let sx,sy,sw,sh; if(sR>tR){ sh=sH; sw=sh*tR; sx=(sW-sw)/2; sy=0; } else { sw=sW; sh=sw/tR; sx=0; sy=(sH-sh)/2; }
+  ctx.drawImage(img, sx,sy,sw,sh, dx,dy,dW,dH);
 }
-
 function drawLabel(ctx, text, x, y){
-  ctx.font = 'bold 24px Inter, system-ui, sans-serif';
-  const padX=10, padY=6;
-  const w = Math.ceil(ctx.measureText(text).width) + 2*padX, h = 24 + 2*padY;
-  ctx.fillStyle = 'rgba(0,0,0,0.45)';
-  const r=10;
-  ctx.beginPath();
-  ctx.moveTo(x+r,y);
-  ctx.arcTo(x+w,y,x+w,y+h,r);
-  ctx.arcTo(x+w,y+h,x,y+h,r);
-  ctx.arcTo(x,y+h,x,y,r);
-  ctx.arcTo(x,y,x+w,y,r);
-  ctx.closePath(); ctx.fill();
-  ctx.fillStyle = '#e9eef4';
-  ctx.fillText(text, x+padX, y+padY+18);
+  ctx.font='bold 24px Inter, system-ui, sans-serif';
+  const padX=10,padY=6, w=Math.ceil(ctx.measureText(text).width)+2*padX, h=24+2*padY; ctx.fillStyle='rgba(0,0,0,0.45)';
+  const r=10; ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); ctx.fill(); ctx.fillStyle='#e9eef4'; ctx.fillText(text, x+padX, y+padY+18);
 }
-
-// Compose a single row OG (Location vs Wardrobe)
-async function composeRowOG(locDataUrl, warDataUrl){
-  const [locImg, warImg] = await Promise.all([locDataUrl, warDataUrl].map(src => new Promise((res, rej)=>{
-    const img = new Image(); img.onload=()=>res(img); img.onerror=rej; img.src=src;
-  })));
-  const W=1200, H=630, half=Math.floor((W-2)/2);
-  const c=document.createElement('canvas'); c.width=W; c.height=H;
-  const ctx=c.getContext('2d');
-  ctx.fillStyle='#0e1217'; ctx.fillRect(0,0,W,H);
-  drawCover(ctx, locImg, 0, 0, half, H);
-  ctx.fillStyle='#233042'; ctx.fillRect(half, 0, 2, H);
-  drawCover(ctx, warImg, half+2, 0, half, H);
-  drawLabel(ctx, 'Location', 24, H-24-38);
-  drawLabel(ctx, 'Wardrobe', half+2+24, H-24-38);
-  return c.toDataURL('image/jpeg', 0.86);
+async function makeRowOG(locDataUrl, warDataUrl){
+  const [a,b] = await Promise.all([locDataUrl, warDataUrl].map(src=>new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src;})));
+  const W=1200,H=630,half=Math.floor((W-2)/2); const c=document.createElement('canvas'); c.width=W; c.height=H; const ctx=c.getContext('2d');
+  ctx.fillStyle='#0e1217'; ctx.fillRect(0,0,W,H); drawCover(ctx,a,0,0,half,H); ctx.fillStyle='#233042'; ctx.fillRect(half,0,2,H); drawCover(ctx,b,half+2,0,half,H);
+  drawLabel(ctx,'Location',24,H-24-38); drawLabel(ctx,'Wardrobe',half+2+24,H-24-38); return c.toDataURL('image/jpeg',0.86);
 }
-
-// Compose master mosaic from many row OGs (tiles up to 6)
-async function composeMasterOG(rowOgs){
-  // Limit to first 6 so details remain legible
-  const imgs = await Promise.all(rowOgs.slice(0,6).map(src => new Promise((res, rej)=>{
-    const img = new Image(); img.onload=()=>res(img); img.onerror=rej; img.src=src;
-  })));
-  const W=1200, H=630, cols=3, rows=Math.ceil(imgs.length/3) || 1;
-  const c=document.createElement('canvas'); c.width=W; c.height=H;
-  const ctx=c.getContext('2d');
-  ctx.fillStyle='#0e1217'; ctx.fillRect(0,0,W,H);
-  const gutter=6, tileW=(W - (cols+1)*gutter)/cols, tileH=(H - (rows+1)*gutter)/rows;
-
-  imgs.forEach((im, i)=>{
-    const r=Math.floor(i/cols), col=i%cols;
-    const x=Math.round(gutter + col*(tileW+gutter));
-    const y=Math.round(gutter + r*(tileH+gutter));
-    drawCover(ctx, im, x, y, Math.round(tileW), Math.round(tileH));
-  });
-
-  if (rowOgs.length > 6) {
-    drawLabel(ctx, `+${rowOgs.length-6} more`, W-24-150, 24);
-  }
-  drawLabel(ctx, (data.project?.title || 'Callsheet'), 24, 24);
-  return c.toDataURL('image/jpeg', 0.86);
+async function makeMasterOG(rowOgs){
+  const imgs = await Promise.all(rowOgs.slice(0,6).map(src=>new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src;})));
+  const W=1200,H=630,cols=3,rows=Math.ceil(imgs.length/3)||1; const c=document.createElement('canvas'); c.width=W; c.height=H; const ctx=c.getContext('2d');
+  ctx.fillStyle='#0e1217'; ctx.fillRect(0,0,W,H); const g=6, tileW=(W-(cols+1)*g)/cols, tileH=(H-(rows+1)*g)/rows;
+  imgs.forEach((im,i)=>{ const r=Math.floor(i/cols), col=i%cols, x=Math.round(g+col*(tileW+g)), y=Math.round(g+r*(tileH+g)); drawCover(ctx,im,x,y,Math.round(tileW),Math.round(tileH)); });
+  if(rowOgs.length>6) drawLabel(ctx, `+${rowOgs.length-6} more`, W-24-150, 24);
+  drawLabel(ctx, (data.project?.title||'Callsheet'), 24, 24);
+  return c.toDataURL('image/jpeg',0.86);
 }
-
-async function publishAllRows(){
-  // Gather rows with both images
-  const rows = (data.shoot || []).map((r,i)=>({r,i}))
-     .filter(x => x.r && x.r.locationImg && x.r.wardrobeImg);
-
-  if (rows.length === 0) { alert('No rows with both Location & Wardrobe images.'); return; }
-
-  // Build per-row OGs
-  const built = [];
-  for (const {r,i} of rows) {
-    const rowId = buildRowId(i);
-    const og = await composeRowOG(r.locationImg, r.wardrobeImg);
-    built.push({ rowId, ogDataUrl: og });
-  }
-
-  // Build master mosaic
-  const masterOgDataUrl = await composeMasterOG(built.map(b => b.ogDataUrl));
-
-  // Project-id based share key
-  const projectId = buildProjectId();
-
-  try{
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids preflight on Apps Script
-      body: JSON.stringify({
-        projectId,
-        masterOgDataUrl,
-        items: built // optional but stored for future per-row shares
-      })
-    });
-    const json = await res.json();
-    if(!json.ok) throw new Error(json.error || 'Upload failed');
-
-    await navigator.clipboard.writeText(json.shareUrl);
-    alert('Full-callsheet share link copied:\n' + json.shareUrl);
-  }catch(err){
-    console.error(err);
-    alert('Sorry, something went wrong. Please try again.');
-  }
+async function publishAll(){
+  const rows=(data.shoot||[]).map((r,i)=>({r,i})).filter(x=>x.r && x.r.locationImg && x.r.wardrobeImg);
+  if(!rows.length){ alert('No rows with both Location & Wardrobe images.'); return; }
+  const perRow=[]; for(const {r,i} of rows){ perRow.push({ rowId:`shoot-${String(i+1).padStart(2,'0')}`, ogDataUrl: await makeRowOG(r.locationImg, r.wardrobeImg) }); }
+  const projectId=buildProjectId(); const masterOgDataUrl=await makeMasterOG(perRow.map(p=>p.ogDataUrl));
+  const res=await fetch(NETLIFY_UPLOAD,{ method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({ projectId, masterOgDataUrl, items: perRow })});
+  const js=await res.json(); if(!res.ok||!js.ok) throw new Error(js.error||'Upload failed');
+  await navigator.clipboard.writeText(js.shareUrl); alert('Full-callsheet share link copied:\\n'+js.shareUrl);
 }
-
-document.getElementById('publishShareAll')?.addEventListener('click', publishAllRows);
+document.getElementById('publishShareAll')?.addEventListener('click', publishAll);
   </script>
 </body>
 </html>
