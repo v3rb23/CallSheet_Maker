@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Callsheet Studio â€” Standalone (v18 + Templates)</title>
+  <title>Callsheet Studio Ñ Standalone (v18 + Templates)</title>
   <style>
     :root{
       --bg:#0e1217; --panel:#121822; --soft:#151d28; --ink:#e9eef4; --muted:#a8b3c2; --line:#233042; --accent:#6cc4ff; --accent-2:#5fe3b3; --warn:#f6b26b; --danger:#f47c7c;
@@ -98,10 +98,9 @@
 
     textarea.noteBox{width:100%; min-height:100px; resize:vertical}
 
-/* Ensure Notes column stays usable */
-th.notes, td.notes{min-width:240px;}
-@media (max-width: 1200px){ th.notes, td.notes{min-width:200px;} }
-@media (max-width: 980px){ th.notes, td.notes{min-width:160px;} }
+    th.notes, td.notes{min-width:240px;}
+    @media (max-width: 1200px){ th.notes, td.notes{min-width:200px;} }
+    @media (max-width: 980px){ th.notes, td.notes{min-width:160px;} }
     input.dur-input{width:6ch; min-width:56px; text-align:right}
 
     @media print{ header.app,.tabs,.no-print,.floating{display:none!important} body{background:#fff;color:#000} .kard{border:1px solid #ccc} th{background:#eee;color:#000} a{color:#000} }
@@ -114,12 +113,12 @@ th.notes, td.notes{min-width:240px;}
         <div class="kard">
           <h3>Project</h3>
           <div class="grid-2">
-            <input id="projectTitle" placeholder="Project Title (e.g., OXGN â€” Lookbook)"/>
+            <input id="projectTitle" placeholder="Project Title (e.g., OXGN Ñ Lookbook)"/>
             <div>
               <select id="clientBrandSel">
-                <option value="">Select Brandâ€¦</option>
+                <option value="">Select BrandÉ</option>
                 <option>OXGN</option><option>Memo</option><option>Forme</option><option>Regatta</option><option>Bocu</option><option>Penshoppe</option>
-                <option value="__custom">Customâ€¦</option>
+                <option value="__custom">CustomÉ</option>
               </select>
               <input id="clientBrandCustom" placeholder="Custom brand" style="display:none;margin-top:6px"/>
             </div>
@@ -140,7 +139,7 @@ th.notes, td.notes{min-width:240px;}
             <label class="btn"><input type="file" id="importJson" accept="application/json" style="display:none">Import JSON</label>
             <button class="btn ghost" id="saveNow">Save</button>
             <button class="btn ghost" id="resetAll">Reset</button>
-		<button class="btn" id="publishShareAll">Publish Share (All Rows)</button>
+            <button class="btn" id="publishShareAll">Publish Share (All Rows)</button>
           </div>
           <div class="pill">Autosaves to your browser (offline-ready). Import/Export to move between devices.</div>
         </div>
@@ -148,7 +147,7 @@ th.notes, td.notes{min-width:240px;}
         <div class="kard">
           <h3>Status</h3>
           <div id="statusBig" class="status-banner status-planning">Planning</div>
-          <div class="pill">Auto: On Set while a row runs â€¢ Delayed if actual > plan â€¢ Wrap at finish.</div>
+          <div class="pill">Auto: On Set while a row runs ¥ Delayed if actual > plan ¥ Wrap at finish.</div>
         </div>
 
         <div class="kard">
@@ -167,7 +166,7 @@ th.notes, td.notes{min-width:240px;}
         </div>
       </div>
       <nav class="tabs">
-        <button class="tab active" data-tab="schedule">Schedule â€¢ Shots & Time</button>
+        <button class="tab active" data-tab="schedule">Schedule ¥ Shots & Time</button>
         <button class="tab" data-tab="team">Manpower & Contacts</button>
         <button class="tab" data-tab="costs">Costs & Receipts</button>
       </nav>
@@ -178,7 +177,7 @@ th.notes, td.notes{min-width:240px;}
     <section class="content active" id="tab-schedule">
       <div class="kard">
         <div class="toolbar">
-          <span class="pill">Preâ€‘Shoot â€” staging before Shoot Proper</span>
+          <span class="pill">Pre?Shoot Ñ staging before Shoot Proper</span>
           <button class="btn" onclick="addRow('pre')">+ Add Row</button>
           <button class="btn" onclick="recalcTimes()">Recalculate Times</button>
         </div>
@@ -202,7 +201,7 @@ th.notes, td.notes{min-width:240px;}
 
       <div class="kard" style="margin-top:14px">
         <div class="toolbar">
-          <span class="pill">Shoot Proper â€” main schedule for looks/layouts</span>
+          <span class="pill">Shoot Proper Ñ main schedule for looks/layouts</span>
           <button class="btn" onclick="addRow('shoot')">+ Add Look/Layout</button>
           <button class="btn" onclick="recalcTimes()">Recalculate Times</button>
         </div>
@@ -231,7 +230,7 @@ th.notes, td.notes{min-width:240px;}
 
     <section class="content" id="tab-team">
       <div class="kard">
-        <div class="toolbar"><span class="pill">Manpower â€” roles, PICs, contacts, and affiliation.</span><button class="btn" onclick="addPerson()">+ Add Role / Person</button></div>
+        <div class="toolbar"><span class="pill">Manpower Ñ roles, PICs, contacts, and affiliation.</span><button class="btn" onclick="addPerson()">+ Add Role / Person</button></div>
         <div style="overflow:auto;max-height:360px">
           <table>
             <thead><tr><th>Role</th><th>Name</th><th>Phone</th><th>Email</th><th>Affiliation</th><th>Call Time</th><th class="notes">Notes</th><th class="no-print" style="width:90px"></th></tr></thead>
@@ -241,7 +240,7 @@ th.notes, td.notes{min-width:240px;}
       </div>
 
       <div class="kard" style="margin-top:14px">
-        <div class="toolbar"><span class="pill">Contacts â€” locations, permits, logistics, security, etc.</span><button class="btn" onclick="addContact()">+ Add Contact</button></div>
+        <div class="toolbar"><span class="pill">Contacts Ñ locations, permits, logistics, security, etc.</span><button class="btn" onclick="addContact()">+ Add Contact</button></div>
         <div style="overflow:auto;max-height:360px">
           <table>
             <thead><tr><th>Company</th><th>Contact Person</th><th>Phone</th><th>Email</th><th>Role / Purpose</th><th class="notes">Notes</th><th class="no-print" style="width:90px"></th></tr></thead>
@@ -256,11 +255,11 @@ th.notes, td.notes{min-width:240px;}
         <div class="toolbar"><span class="pill">Track vendors/suppliers, costs, and attach receipts.</span><button class="btn" onclick="addCost()">+ Add Cost</button></div>
         <div style="overflow:auto;max-height:520px">
           <table>
-            <thead><tr><th style="width:120px">Date</th><th>Item / Description</th><th style="width:160px">Category</th><th>Vendor / Supplier</th><th>Vendor Contact</th><th style="width:160px">Amount (â‚±)</th><th>Receipt</th><th class="no-print" style="width:90px"></th></tr></thead>
+            <thead><tr><th style="width:120px">Date</th><th>Item / Description</th><th style="width:160px">Category</th><th>Vendor / Supplier</th><th>Vendor Contact</th><th style="width:160px">Amount (?)</th><th>Receipt</th><th class="no-print" style="width:90px"></th></tr></thead>
             <tbody id="tbody-costs"></tbody>
           </table>
         </div>
-        <div class="totals" style="margin-top:10px"><div>Total: <strong id="costTotal">â‚±0.00</strong></div></div>
+        <div class="totals" style="margin-top:10px"><div>Total: <strong id="costTotal">?0.00</strong></div></div>
       </div>
     </section>
   </main>
@@ -269,20 +268,20 @@ th.notes, td.notes{min-width:240px;}
     <div class="head" id="ft-head">
       <div class="title">Layout Timer</div>
       <div>
-        <button class="btn ghost" id="ft-min">â€“</button>
-        <button class="btn ghost" id="ft-resetPos" title="Reset position">â†º</button>
+        <button class="btn ghost" id="ft-min">Ð</button>
+        <button class="btn ghost" id="ft-resetPos" title="Reset position">?</button>
       </div>
     </div>
     <div class="body">
       <div class="row" style="margin:6px 0"><select id="ft-rowSel" style="width:100%"></select></div>
       <div class="title" id="ft-title">No active row</div>
       <div class="ft-remaining" id="ft-remaining">--:--.--</div>
-      <div class="chip" id="ft-status">â€”</div>
+      <div class="chip" id="ft-status">Ñ</div>
       <div id="ft-phases" class="ft-phases"></div>
       <div class="row" style="margin-top:8px">
         <button class="btn success" id="ft-toggle">Start</button>
-        <button class="btn primary" id="ft-next">Next Phase â†’</button>
-        <button class="btn" id="ft-nextLayout" title="Skip to next layout">Next Layout Â»</button>
+        <button class="btn primary" id="ft-next">Next Phase ?</button>
+        <button class="btn" id="ft-nextLayout" title="Skip to next layout">Next Layout È</button>
       </div>
       <div class="row" style="margin-top:6px"><input id="ft-delayMin" type="number" min="1" value="5" style="max-width:80px" title="Delay minutes"/><input id="ft-delayNote" placeholder="Delay reason / notes"/><button class="btn warn" id="ft-addDelay">Add Delay</button></div>
       <div class="pill" id="ft-delays" style="margin-top:6px">No delays logged.</div>
@@ -302,7 +301,7 @@ th.notes, td.notes{min-width:240px;}
 
     // ===== Utilities =====
     const $ = sel => document.querySelector(sel); const $$ = sel => Array.from(document.querySelectorAll(sel));
-    const pad=n=> (n<10?'0':'')+n; const pad2=n=> (n<10?'0':'')+n; const fmtMoney=n=>'â‚±'+(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+    const pad=n=> (n<10?'0':'')+n; const pad2=n=> (n<10?'0':'')+n; const fmtMoney=n=>'?'+(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
     function toDate(dateStr, timeStr){ const d = dateStr? new Date(dateStr+'T00:00:00') : new Date(); if(!timeStr) return d; const [h,m] = (timeStr||'').split(':').map(x=>parseInt(x||0,10)); d.setHours(h||0,m||0,0,0); return d; }
     const addMinutes=(date,mins)=>{ const d=new Date(date); d.setMinutes(d.getMinutes()+Number(mins||0)); return d; };
     const timeDiffMin=(a,b)=> Math.round((a-b)/60000);
@@ -331,15 +330,15 @@ th.notes, td.notes{min-width:240px;}
     const SHOOT_TYPES=['Duo','Solo','Group','Reel','Campaign','Socials'];
     const PHASE_TYPES=['Lighting','Styling','Video Campaign','Video Reels','Photo'];
 
-    function shootTypeSelect(val, idx){ const extra=(val && !SHOOT_TYPES.includes(val))? `<option selected>${val}</option>`:''; return `<select data-field="type" onchange="edit('shoot',${idx},'type',this.value)"><option value="">Selectâ€¦</option>${SHOOT_TYPES.map(t=>`<option ${val===t?'selected':''}>${t}</option>`).join('')}${extra}</select>`; }
+    function shootTypeSelect(val, idx){ const extra=(val && !SHOOT_TYPES.includes(val))? `<option selected>${val}</option>`:''; return `<select data-field="type" onchange="edit('shoot',${idx},'type',this.value)"><option value="">SelectÉ</option>${SHOOT_TYPES.map(t=>`<option ${val===t?'selected':''}>${t}</option>`).join('')}${extra}</select>`; }
 
-    function imgOnlyCell(section,idx,key){ const img=(data[section][idx]||{})[key]; const has=!!img; return `<div class="thumbwrap"><label class="thumbbtn" title="${has?'Change image':'Upload image'}">${has?`<img src="${img}" alt="">`:''}<input type="file" accept="image/*" onchange="uploadCellImage(event,'${section}',${idx},'${key}')"></label>${has?`<button class='btn ghost' title='Clear' onclick="clearCellImage('${section}',${idx},'${key}')">Ã—</button>`:''}</div>`; }
+    function imgOnlyCell(section,idx,key){ const img=(data[section][idx]||{})[key]; const has=!!img; return `<div class="thumbwrap"><label class="thumbbtn" title="${has?'Change image':'Upload image'}">${has?`<img src="${img}" alt="">`:''}<input type="file" accept="image/*" onchange="uploadCellImage(event,'${section}',${idx},'${key}')"></label>${has?`<button class='btn ghost' title='Clear' onclick="clearCellImage('${section}',${idx},'${key}')">?</button>`:''}</div>`; }
 
     function phasesCell(rowIdx){ const r=data.shoot[rowIdx]||{}; const phases=r.phases||[]; const auto=r.autoPhases!==false; const rows = phases.map((p,pi)=>`<div class='phase-row'>
         <select onchange="editPhase(${rowIdx},${pi},'label',this.value)">${PHASE_TYPES.map(t=>`<option ${p.label===t?'selected':''}>${t}</option>`).join('')}</select>
         <input type='time' step='60' value='${p.start||''}' onchange="editPhase(${rowIdx},${pi},'start',this.value,true)" title='Phase start'>
         <input type='number' min='0' step='1' value='${Number(p.mins||0)}' oninput="editPhase(${rowIdx},${pi},'mins',this.value,false,true)" title='Minutes'>
-        <button class='btn danger' onclick="removePhase(${rowIdx},${pi})">Ã—</button>
+        <button class='btn danger' onclick="removePhase(${rowIdx},${pi})">?</button>
       </div>`).join('');
       return `<div class='phases'>${rows||`<div class='phase-tag'>No phases yet.</div>`}
         <div class='phase-tools'>
@@ -350,8 +349,8 @@ th.notes, td.notes{min-width:240px;}
       </div>`; }
 
     function rowTemplate(section,row,idx){ const isPre = section==='pre'; return `<tr data-section="${section}" data-index="${idx}">
-      <td class="order"><button class="btn" onclick="moveRow('${section}',${idx},-1)" title="Move up">â†‘</button><button class="btn" onclick="moveRow('${section}',${idx},1)" title="Move down">â†“</button></td>
-      <td><input data-field="label" value="${row.label||''}" oninput="edit('${section}',${idx},'label',this.value)" placeholder="${isPre?'Item (e.g., Call Time, Setâ€‘up)':'Look / Layout #'}"></td>
+      <td class="order"><button class="btn" onclick="moveRow('${section}',${idx},-1)" title="Move up">?</button><button class="btn" onclick="moveRow('${section}',${idx},1)" title="Move down">?</button></td>
+      <td><input data-field="label" value="${row.label||''}" oninput="edit('${section}',${idx},'label',this.value)" placeholder="${isPre?'Item (e.g., Call Time, Set?up)':'Look / Layout #'}"></td>
       ${!isPre? `<td>${shootTypeSelect(row.type||'', idx)}</td>`:''}
       ${!isPre? `<td>${imgOnlyCell('shoot',idx,'locationImg')}</td>`:''}
       ${!isPre? `<td>${imgOnlyCell('shoot',idx,'wardrobeImg')}</td>`:''}
@@ -416,7 +415,7 @@ th.notes, td.notes{min-width:240px;}
     let rafId=null; let lastAutosaveTs=0;
     const anyRunning = () => ([...data.pre, ...data.shoot].some(r=>r.running));
 
-    function refreshRowSelect(){ const sel=$('#ft-rowSel'); if(!sel) return; const opts=[]; (data.pre||[]).forEach((r,i)=>opts.push({k:`pre:${i}`,t:`Pre ${i+1} â€” ${r.label||'(untitled)'}`})); (data.shoot||[]).forEach((r,i)=>opts.push({k:`shoot:${i}`,t:`Shoot ${i+1} â€” ${r.label||'(untitled)'}`})); sel.innerHTML=opts.map(o=>`<option value="${o.k}">${o.t}</option>`).join(''); if(active.section){ sel.value=`${active.section}:${active.index}`; } sel.onchange=()=>{ const [sec,idx]=sel.value.split(':'); active={section:sec,index:parseInt(idx,10)}; renderFloating(); updateStatus(); }; }
+    function refreshRowSelect(){ const sel=$('#ft-rowSel'); if(!sel) return; const opts=[]; (data.pre||[]).forEach((r,i)=>opts.push({k:`pre:${i}`,t:`Pre ${i+1} ¥ ${r.label||'(untitled)')}`})); (data.shoot||[]).forEach((r,i)=>opts.push({k:`shoot:${i}`,t:`Shoot ${i+1} ¥ ${r.label||'(untitled)')}`})); sel.innerHTML=opts.map(o=>`<option value="${o.k}">${o.t}</option>`).join(''); if(active.section){ sel.value=`${active.section}:${active.index}`; } sel.onchange=()=>{ const [sec,idx]=sel.value.split(':'); active={section:sec,index:parseInt(idx,10)}; renderFloating(); updateStatus(); }; }
 
     function startTicker(){ if(rafId) return; lastAutosaveTs=Date.now(); const loop=()=>{ const now=Date.now(); let minChanged=false; ['pre','shoot'].forEach(sec=> data[sec].forEach(r=>{ if(r.running||r.elapsedMs){ const m = Math.floor(elapsedMs(r)/60000); if(m!==Number(r.actual||0)){ r.actual=m; minChanged=true; } } }));
         renderFloating(); updateStatus();
@@ -434,7 +433,7 @@ th.notes, td.notes{min-width:240px;}
     function nextPhase(){ if(active.index<0) return; const r=data[active.section][active.index]; const phases=r.phases||[]; if(!phases.length){ nextLayout(); return; } const e=elapsedMs(r); let sum=0, idx=-1; for(let i=0;i<phases.length;i++){ const end=sum + Number(phases[i].mins||0)*60000; if(e < end){ idx=i; break; } sum=end; } if(idx===-1){ nextLayout(); return; } if(idx < phases.length-1){ startPhaseNow(idx+1); } else { nextLayout(); } autosave(); renderFloating(); updateStatus(); }
 
     function addDelayToActive(){ const sel=$('#ft-rowSel'); if(sel&&sel.value){ const [sec,idx]=sel.value.split(':'); active={section:sec,index:parseInt(idx,10)}; }
-      if(active.index<0) return; const r=data[active.section][active.index]; const mins=Number($('#ft-delayMin').value||0); const note=$('#ft-delayNote').value||''; if(!mins) return; r.delays=r.delays||[]; r.delays.push({mins,note,at:new Date().toISOString()}); r.dur=Number(r.dur||0)+mins; r.notes=(r.notes||'')+(note?` | Delay: +${mins}m â€” ${note}`:` | Delay: +${mins}m`); $('#ft-delayNote').value=''; $('#ft-delayMin').value=''; autosave(); recalcTimes(false); }
+      if(active.index<0) return; const r=data[active.section][active.index]; const mins=Number($('#ft-delayMin').value||0); const note=$('#ft-delayNote').value||''; if(!mins) return; r.delays=r.delays||[]; r.delays.push({mins,note,at:new Date().toISOString()}); r.dur=Number(r.dur||0)+mins; r.notes=(r.notes||'')+(note?` | Delay: +${mins}m Ñ ${note}`:` | Delay: +${mins}m`); $('#ft-delayNote').value=''; $('#ft-delayMin').value=''; autosave(); recalcTimes(false); }
 
     function startPhaseNow(targetIndex){ if(active.index<0) return; const r=data[active.section][active.index]; const phases=r.phases||[]; if(!phases.length) return; if(targetIndex<0 || targetIndex>=phases.length) return; const e = elapsedMs(r);
       let currIdx=0, sumBefore=0; for(let i=0;i<phases.length;i++){ const end=sumBefore + Number(phases[i].mins||0)*60000; if(e < end){ currIdx=i; break; } sumBefore=end; if(i===phases.length-1){ currIdx=phases.length-1; } }
@@ -442,9 +441,9 @@ th.notes, td.notes{min-width:240px;}
 
     function renderPhaseMiniList(r){ const cont=$('#ft-phases'); if(!cont) return; const phases=r.phases||[]; if(!phases.length){ cont.innerHTML='<div class="pill">No phases set for this layout.</div>'; return; }
       const e=elapsedMs(r); let totals=phases.map(p=>Number(p.mins||0)*60000), cum=0, currentIdx=-1, nextIdx=-1; for(let i=0;i<phases.length;i++){ const end=cum+totals[i]; if(e<end){ currentIdx=i; nextIdx=i+1; break; } cum=end; } if(currentIdx===-1){ currentIdx=phases.length-1; nextIdx=phases.length; }
-      let accMs=0; const html=phases.map((p,i)=>{ const durMs=Number(p.mins||0)*60000; const startMs=accMs; const endMs=accMs+durMs; let cls='pending'; let frac=0; let right='+'+(p.mins||0)+'m'; if(e>=endMs){ cls='done'; frac=1; right='done'; } else if(e>=startMs){ cls='current'; const inMs=e-startMs; frac=durMs? Math.min(1,inMs/durMs):1; const remain=Math.max(0,durMs-inMs); right='â€“'+fmtMMSScc(remain); } const w=Math.round(frac*100); const label=(p.label||('Phase '+(i+1))); let btn=''; if(i===currentIdx && i<phases.length-1){ btn = `<button class="mini-btn" onclick="startPhaseNow(${i+1})">Next</button>`; } else if(i===nextIdx){ btn = `<button class="mini-btn" onclick="startPhaseNow(${i})">Start</button>`; } accMs+=durMs; return `<div class="phase-mini ${cls}"><div class="label">${label}</div><div class="bar"><span style="width:${w}%"></span></div><div class="time">${right}</div>${btn?`<div>${btn}</div>`:''}</div>`; }).join(''); cont.innerHTML=`<div class="phase-mini-list">${html}</div>`; }
+      let accMs=0; const html=phases.map((p,i)=>{ const durMs=Number(p.mins||0)*60000; const startMs=accMs; const endMs=accMs+durMs; let cls='pending'; let frac=0; let right='+'+(p.mins||0)+'m'; if(e>=endMs){ cls='done'; frac=1; right='done'; } else if(e>=startMs){ cls='current'; const inMs=e-startMs; frac=durMs? Math.min(1,inMs/durMs):1; const remain=Math.max(0,durMs-inMs); right='?'+fmtMMSScc(remain); } const w=Math.round(frac*100); const label=(p.label||('Phase '+(i+1))); let btn=''; if(i===currentIdx && i<phases.length-1){ btn = `<button class="mini-btn" onclick="startPhaseNow(${i+1})">Next</button>`; } else if(i===nextIdx){ btn = `<button class="mini-btn" onclick="startPhaseNow(${i})">Start</button>`; } accMs+=durMs; return `<div class="phase-mini ${cls}"><div class="label">${label}</div><div class="bar"><span style="width:${w}%"></span></div><div class="time">${right}</div>${btn?`<div>${btn}</div>`:''}</div>`; }).join(''); cont.innerHTML=`<div class="phase-mini-list">${html}</div>`; }
 
-    function renderFloating(){ const pnl=$('#floating'); pnl.style.display='block'; const ttl=$('#ft-title'), rem=$('#ft-remaining'), st=$('#ft-status'), tog=$('#ft-toggle'), nxt=$('#ft-next'), nxtL=$('#ft-nextLayout'), delog=$('#ft-delays'); if(active.index<0){ ttl.textContent='No active row'; rem.textContent='--:--.--'; st.textContent='â€”'; tog.textContent='Start'; tog.disabled=true; if(nxt) nxt.disabled=true; if(nxtL) nxtL.disabled=true; delog.textContent='No delays logged.'; $('#ft-phases').innerHTML=''; return; } const r=data[active.section][active.index]; ttl.textContent=`${active.section==='pre'?'Preâ€‘Shoot':'Shoot'} â€¢ ${r.label||'(untitled)'}`; const remaining=Math.max(0, plannedMs(r) - elapsedMs(r)); rem.textContent=fmtMMSScc(remaining); st.textContent=r.running?'Running':'Paused'; st.className='chip'; tog.textContent=r.running?'Pause':'Start'; tog.disabled=false; if(nxt) nxt.disabled=false; if(nxtL) nxtL.disabled=false; delog.textContent=(r.delays&&r.delays.length)? r.delays.map(d=>`+${d.mins}m ${d.note||''}`).join('; ') : 'No delays logged.'; renderPhaseMiniList(r); }
+    function renderFloating(){ const pnl=$('#floating'); pnl.style.display='block'; const ttl=$('#ft-title'), rem=$('#ft-remaining'), st=$('#ft-status'), tog=$('#ft-toggle'), nxt=$('#ft-next'), nxtL=$('#ft-nextLayout'), delog=$('#ft-delays'); if(active.index<0){ ttl.textContent='No active row'; rem.textContent='--:--.--'; st.textContent='Ñ'; tog.textContent='Start'; tog.disabled=true; if(nxt) nxt.disabled=true; if(nxtL) nxtL.disabled=true; delog.textContent='No delays logged.'; $('#ft-phases').innerHTML=''; return; } const r=data[active.section][active.index]; ttl.textContent=`${active.section==='pre'?'Pre?Shoot':'Shoot'} ¥ ${r.label||'(untitled)'}`; const remaining=Math.max(0, plannedMs(r) - elapsedMs(r)); rem.textContent=fmtMMSScc(remaining); st.textContent=r.running?'Running':'Paused'; st.className='chip'; tog.textContent=r.running?'Pause':'Start'; tog.disabled=false; if(nxt) nxt.disabled=false; if(nxtL) nxtL.disabled=false; delog.textContent=(r.delays&&r.delays.length)? r.delays.map(d=>`+${d.mins}m ${d.note||''}`).join('; ') : 'No delays logged.'; renderPhaseMiniList(r); }
     $('#ft-toggle').onclick=toggleTimer; $('#ft-next').onclick=nextPhase; $('#ft-nextLayout').onclick=nextLayout; $('#ft-addDelay').onclick=addDelayToActive;
 
     function computeStatus(){ if(data.project.wrapped) return {cls:'status-wrap',label:'Wrap'}; if(active.index>=0){ const r=data[active.section][active.index]; if(elapsedMs(r) > plannedMs(r)) return {cls:'status-delayed',label:'Delayed'}; if(r.running) return {cls:'status-live',label:'On Set'}; } const anyRun=[...data.pre,...data.shoot].some(r=>r.running); if(anyRun) return {cls:'status-live',label:'On Set'}; return {cls:'status-planning',label:'Planning'}; }
@@ -465,7 +464,7 @@ th.notes, td.notes{min-width:240px;}
     function contactRow(p,i){ return `<tr><td><input value="${p.company||''}" oninput="editContact(${i},'company',this.value)"></td><td><input value="${p.person||''}" oninput="editContact(${i},'person',this.value)"></td><td><input value="${p.phone||''}" oninput="editContact(${i},'phone',this.value)"></td><td><input value="${p.email||''}" oninput="editContact(${i},'email',this.value)"></td><td><input value="${p.role||''}" oninput="editContact(${i},'role',this.value)"></td><td><input value="${p.notes||''}" oninput="editContact(${i},'notes',this.value)"></td><td class="no-print"><button class="btn danger" onclick="delContact(${i})">Del</button></td></tr>` }
     function renderContacts(){ $('#tbody-contacts').innerHTML=data.contacts.map(contactRow).join('') }
     function addContact(){ data.contacts.push({company:'',person:'',phone:'',email:'',role:'',notes:''}); autosave(); renderContacts(); }
-    function editContact(i,k,v){ data.contacts[i][k]=v; autosave(); }
+    function editContact(i,k,v){ data.contacts[i][k]=k==='role'? v: v; autosave(); }
     function delContact(i){ data.contacts.splice(i,1); autosave(); renderContacts(); }
 
     function costRow(c,i){ return `<tr><td><input type="date" value="${c.date||''}" oninput="editCost(${i},'date',this.value)"></td><td><input value="${c.item||''}" oninput="editCost(${i},'item',this.value)" placeholder="Description"></td><td><input value="${c.cat||''}" oninput="editCost(${i},'cat',this.value)" placeholder="Category"></td><td><input value="${c.vendor||''}" oninput="editCost(${i},'vendor',this.value)" placeholder="Vendor / Supplier"></td><td><input value="${c.vcontact||''}" oninput="editCost(${i},'vcontact',this.value)" placeholder="Contact"></td><td><input type="number" step="0.01" value="${c.amt||''}" oninput="editCost(${i},'amt',this.value)"></td><td>${c.receipt?'<a href="'+c.receipt+'" target="_blank">View</a>':''}<label class="btn" style="margin-left:8px"><input type="file" accept="image/*" style="display:none" onchange="uploadReceipt(event,${i})">Upload</label></td><td class="no-print"><button class="btn danger" onclick="delCost(${i})">Del</button></td></tr>` }
@@ -486,15 +485,15 @@ th.notes, td.notes{min-width:240px;}
     // ===== Printable report =====
     function printableHTML(){
       const delaySum=r=>(r.delays&&r.delays.length)? r.delays.map(d=>`+${d.mins}m ${d.note||''}`).join('; '):'';
-      const preRows=data.pre.map(r=>[r.label,r.start,r.end,r.dur,(r.notes||'')+(delaySum(r)?' â€” Delays: '+delaySum(r):'')]);
+      const preRows=data.pre.map(r=>[r.label,r.start,r.end,r.dur,(r.notes||'')+(delaySum(r)?' Ñ Delays: '+delaySum(r):'')]);
       function shootTable(){
         const header=['Look/Layout #','Type','Location','Wardrobe','Start','End','Dur','Phases','Notes'];
         const th=`<tr>${header.map(h=>`<th>${h}</th>`).join('')}</tr>`;
         const rows=data.shoot.map(r=>{
           const loc = r.locationImg? `<img class="pimg" src="${r.locationImg}" alt="">` : '';
           const ward = r.wardrobeImg? `<img class="pimg" src="${r.wardrobeImg}" alt="">` : '';
-          const phases = (r.phases||[]).map(p=>`${p.label||''} ${p.start||''} (+${p.mins||0}m)`).join(' â€¢ ');
-          const notes = (r.notes||'') + (delaySum(r)? ' â€” Delays: '+delaySum(r):'');
+          const phases = (r.phases||[]).map(p=>`${p.label||''} ${p.start||''} (+${p.mins||0}m)`).join(' ¥ ');
+          const notes = (r.notes||'') + (delaySum(r)? ' Ñ Delays: '+delaySum(r):'');
           return `<tr><td>${(r.label||'').replace(/</g,'&lt;')}</td><td>${(r.type||'').replace(/</g,'&lt;')}</td><td>${loc}</td><td>${ward}</td><td>${r.start||''}</td><td>${r.end||''}</td><td>${r.dur||''}</td><td>${phases.replace(/</g,'&lt;')}</td><td>${notes.replace(/</g,'&lt;')}</td></tr>`;
         }).join('');
         return `<thead>${th}</thead><tbody>${rows}</tbody>`;
@@ -503,9 +502,9 @@ th.notes, td.notes{min-width:240px;}
       <style>body{font-family:system-ui,Segoe UI,Roboto,Arial;padding:16px;color:#000}table{width:100%;border-collapse:collapse;margin:10px 0}th,td{border:1px solid #ddd;padding:6px 8px;font-size:12px;text-align:left;vertical-align:top}h1,h2{margin:8px 0}.pimg{width:160px;height:160px;object-fit:cover;border:1px solid #ccc;border-radius:6px}@page{size:A4;margin:10mm}</style></head>
       <body>
         <h1>Callsheet</h1>
-        <div><strong>${(data.project.title||'').replace(/</g,'&lt;')}</strong> â€¢ ${(data.project.client||'').replace(/</g,'&lt;')}</div>
+        <div><strong>${(data.project.title||'').replace(/</g,'&lt;')}</strong> ¥ ${(data.project.client||'').replace(/</g,'&lt;')}</div>
         <div style="margin:6px 0 14px"><em>${(data.project.notes||'').replace(/</g,'&lt;')}</em></div>
-        <h2>Preâ€‘Shoot</h2>
+        <h2>Pre?Shoot</h2>
         <table>${`<thead><tr><th>Item</th><th>Start</th><th>End</th><th>Dur (min)</th><th class="notes">Notes</th></tr></thead><tbody>${preRows.map(r=>`<tr>${r.map(v=>`<td>${(v||'').toString().replace(/</g,'&lt;')}</td>`).join('')}</tr>`).join('')}</tbody>`}</table>
         <h2>Shoot Proper</h2>
         <table>${shootTable()}</table>
@@ -517,7 +516,7 @@ th.notes, td.notes{min-width:240px;}
         <table>${(function(){const rows=data.costs.map(c=>[c.date,c.item,c.cat,c.vendor,c.vcontact,fmtMoney(c.amt)]); const header=['Date','Item','Category','Vendor','Contact','Amount']; return `<thead><tr>${header.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(v=>`<td>${(v||'').toString().replace(/</g,'&lt;')}</td>`).join('')}</tr>`).join('')}</tbody>`})()}</table>
       </body></html>`;
     }
-    $('#exportPdf').addEventListener('click',()=>{ const w=window.open('', '_blank'); if(!w){ alert('Popâ€‘up blocked. Please allow popâ€‘ups for this page.'); return; } w.document.open(); w.document.write(printableHTML()); w.document.close(); w.focus(); setTimeout(()=>{ w.print(); }, 200); });
+    $('#exportPdf').addEventListener('click',()=>{ const w=window.open('', '_blank'); if(!w){ alert('Pop?up blocked. Please allow pop?ups for this page.'); return; } w.document.open(); w.document.write(printableHTML()); w.document.close(); w.focus(); setTimeout(()=>{ w.print(); }, 200); });
 
     $('#saveNow').addEventListener('click',autosave); $('#resetAll').addEventListener('click',()=>{ if(confirm('Clear all data?')){ data=emptyData(); autosave(); renderAll(); } })
 
@@ -559,23 +558,74 @@ th.notes, td.notes{min-width:240px;}
     $('#tplDefaultChk').addEventListener('change', tplSetDefaultToggle);
 
     // ===== Boot =====
-    function seed(){ if(data.pre.length || data.shoot.length) return; data.project = { title:'Project Name', client:'Brand', date:new Date().toISOString().slice(0,10), location:'Studio / Onâ€‘Location', dayStart:'18:00', shootStart:'22:00', lockShoot:true, notes:'Bring umbrellas, water, fans.', wrapped:false }; data.pre = [ {label:'Call Time (Prod Team) â€” Equipment Prep', dur:90, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Call Time (Models + HMUA + Mktg)', dur:15, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Dinner', dur:30, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'HMU (2 Models)', dur:90, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Transfer to DC', dur:15, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Ingress / Setâ€‘up', dur:60, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null} ]; data.shoot = [ {label:'SETâ€‘UP / STYLING', type:'Solo', dur:30, notes:'', start:'', end:'', actual:0, running:false, delays:[], locationImg:'', wardrobeImg:'', phases:[{label:'Lighting',start:'',mins:10},{label:'Styling',start:'',mins:10},{label:'Photo',start:'',mins:10}], autoPhases:true, elapsedMs:0, startedAt:null}, {label:'LAYOUT 1 (INDOOR)', type:'Group', dur:40, notes:'', start:'', end:'', actual:0, running:false, delays:[], locationImg:'', wardrobeImg:'', phases:[{label:'Lighting',start:'',mins:10},{label:'Video Campaign',start:'',mins:15},{label:'Photo',start:'',mins:15}], autoPhases:true, elapsedMs:0, startedAt:null} ]; }
+    function seed(){ if(data.pre.length || data.shoot.length) return; data.project = { title:'Project Name', client:'Brand', date:new Date().toISOString().slice(0,10), location:'Studio / On?Location', dayStart:'18:00', shootStart:'22:00', lockShoot:true, notes:'Bring umbrellas, water, fans.', wrapped:false }; data.pre = [ {label:'Call Time (Prod Team) Ñ Equipment Prep', dur:90, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Call Time (Models + HMUA + Mktg)', dur:15, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Dinner', dur:30, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'HMU (2 Models)', dur:90, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Transfer to DC', dur:15, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null}, {label:'Ingress / Set?up', dur:60, notes:'', start:'', end:'', actual:0, running:false, delays:[], elapsedMs:0, startedAt:null} ]; data.shoot = [ {label:'SET?UP / STYLING', type:'Solo', dur:30, notes:'', start:'', end:'', actual:0, running:false, delays:[], locationImg:'', wardrobeImg:'', phases:[{label:'Lighting',start:'',mins:10},{label:'Styling',start:'',mins:10},{label:'Photo',start:'',mins:10}], autoPhases:true, elapsedMs:0, startedAt:null}, {label:'LAYOUT 1 (INDOOR)', type:'Group', dur:40, notes:'', start:'', end:'', actual:0, running:false, delays:[], locationImg:'', wardrobeImg:'', phases:[{label:'Lighting',start:'',mins:10},{label:'Video Campaign',start:'',mins:15},{label:'Photo',start:'',mins:15}], autoPhases:true, elapsedMs:0, startedAt:null} ]; }
 
     function maybeLoadDefaultTemplate(){ const def=localStorage.getItem(TPL_DEFAULT_KEY); if(def){ const t=tplFind(def); if(t){ data = deepClone(t.data); }} }
 
     // Boot
     load(); maybeLoadDefaultTemplate(); seed(); renderAll(); recalcTimes(); tplLoadFromURL();
-// change this to your Netlify site URL:
-const NETLIFY_UPLOAD = 'https://callsheetv2.netlify.app/.netlify/functions/upload';
-/* The rest of the script composes the 1200x630 mosaic and posts it.
-   It expects your page to have:
-   - data.project.title (string)
-   - data.project.date  (string like YYYY-MM-DD; any non-digits are stripped)
-   - data.shoot[] rows where each row has:
-       row.locationImg (data URL)
-       row.wardrobeImg (data URL)
-   The exact script code is in client/publish_all.js inside the ZIP. */
-  </script> <script src="client/publish_all.js"></script>
+  </script>
+
+  <!-- ? Fixed: Inline publish script (no double declarations, guaranteed listener) -->
+  <script>
+  (function(){
+    const NETLIFY_UPLOAD = 'https://callsheetv2.netlify.app/.netlify/functions/upload';
+
+    function slugify(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'').slice(0,60); }
+    function buildProjectId(){ const t=(window.data?.project?.title||'callsheet'); const d=(window.data?.project?.date||'').replace(/[^0-9]/g,''); return `${slugify(t)}-${d}`; }
+
+    function drawCover(ctx, img, dx, dy, dW, dH){
+      const sW=img.naturalWidth||img.width, sH=img.naturalHeight||img.height, tR=dW/dH, sR=sW/sH;
+      let sx,sy,sw,sh; if(sR>tR){ sh=sH; sw=sh*tR; sx=(sW-sw)/2; sy=0; } else { sw=sW; sh=sw/tR; sx=0; sy=(sH-sh)/2; }
+      ctx.drawImage(img, sx,sy,sw,sh, dx,dy,dW,dH);
+    }
+    function drawLabel(ctx, text, x, y){
+      ctx.font='bold 24px Inter, system-ui, sans-serif';
+      const padX=10,padY=6, w=Math.ceil(ctx.measureText(text).width)+2*padX, h=24+2*padY; ctx.fillStyle='rgba(0,0,0,0.45)';
+      const r=10; ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); ctx.fill();
+      ctx.fillStyle='#e9eef4'; ctx.fillText(text, x+padX, y+padY+18);
+    }
+    function loadImage(src){ return new Promise((res,rej)=>{ const i=new Image(); i.onload=()=>res(i); i.onerror=rej; i.src=src; }); }
+    async function makeRowOG(locDataUrl, warDataUrl){
+      const [a,b] = await Promise.all([loadImage(locDataUrl), loadImage(warDataUrl)]);
+      const W=1200,H=630,half=Math.floor((W-2)/2); const c=document.createElement('canvas'); c.width=W; c.height=H; const ctx=c.getContext('2d');
+      ctx.fillStyle='#0e1217'; ctx.fillRect(0,0,W,H); drawCover(ctx,a,0,0,half,H); ctx.fillStyle='#233042'; ctx.fillRect(half,0,2,H); drawCover(ctx,b,half+2,0,half,H);
+      drawLabel(ctx,'Location',24,H-24-38); drawLabel(ctx,'Wardrobe',half+2+24,H-24-38);
+      return c.toDataURL('image/jpeg',0.86);
+    }
+    async function makeMasterOG(rowOgs){
+      const imgs = await Promise.all(rowOgs.slice(0,6).map(loadImage));
+      const W=1200,H=630,cols=3,rows=Math.ceil(imgs.length/3)||1; const c=document.createElement('canvas'); c.width=W; c.height=H; const ctx=c.getContext('2d');
+      ctx.fillStyle='#0e1217'; ctx.fillRect(0,0,W,H); const g=6, tileW=(W-(cols+1)*g)/cols, tileH=(H-(rows+1)*g)/rows;
+      imgs.forEach((im,i)=>{ const r=Math.floor(i/cols), col=i%cols, x=Math.round(g+col*(tileW+g)), y=Math.round(g+r*(tileH+g)); drawCover(ctx,im,x,y,Math.round(tileW),Math.round(tileH)); });
+      if(rowOgs.length>6) drawLabel(ctx, `+${rowOgs.length-6} more`, W-24-150, 24);
+      drawLabel(ctx, (window.data?.project?.title||'Callsheet'), 24, 24);
+      return c.toDataURL('image/jpeg',0.86);
+    }
+
+    async function publishAllRows(){
+      try{
+        const rows=(window.data?.shoot||[]).map((r,i)=>({r,i})).filter(x=>x.r && x.r.locationImg && x.r.wardrobeImg);
+        if(!rows.length){ alert('No rows with both Location & Wardrobe images.'); return; }
+        const perRow=[]; for(const {r,i} of rows){ perRow.push({ rowId:`shoot-${String(i+1).padStart(2,'0')}`, ogDataUrl: await makeRowOG(r.locationImg, r.wardrobeImg) }); }
+        const projectId=buildProjectId(); const masterOgDataUrl=await makeMasterOG(perRow.map(p=>p.ogDataUrl));
+        const res=await fetch(NETLIFY_UPLOAD,{ method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({ projectId, masterOgDataUrl, items: perRow })});
+        const js=await res.json().catch(()=>({}));
+        if(!res.ok||!js.ok){ console.error('Upload failed', js); alert('Upload failed: '+(js.error||res.status)); return; }
+        await navigator.clipboard.writeText(js.shareUrl).catch(()=>{});
+        alert('Share link copied:\n'+js.shareUrl);
+      }catch(err){ console.error(err); alert('Error: '+err); }
+    }
+
+    function onReady(cb){ if(document.readyState!=='loading') cb(); else document.addEventListener('DOMContentLoaded', cb); }
+    onReady(()=>{
+      const btn=document.getElementById('publishShareAll');
+      if(btn){ btn.addEventListener('click', publishAllRows); }
+      else { console.warn('#publishShareAll not found'); }
+    });
+  })();
+  </script>
+
+  <!-- NOTE: removed external <script src="client/publish_all.js"></script> to avoid double definitions -->
 </body>
 </html>
-
